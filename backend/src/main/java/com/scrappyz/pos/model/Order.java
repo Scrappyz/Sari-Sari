@@ -26,6 +26,7 @@ public class Order {
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
 
+    // Getters
     public Long getId() {
         return id;
     }
@@ -47,6 +48,7 @@ public class Order {
         return totalAmount;
     }
 
+    // Setters
     public void setId(Long id) {
         this.id = id;
     } 

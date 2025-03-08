@@ -27,6 +27,7 @@ public class Product {
     @Column(name = "stock")
     private int stock;
 
+    // Getters
     public Long getId() {
         return id;
     }
@@ -43,6 +44,7 @@ public class Product {
         return stock;
     }
 
+    // Setters
     public void setId(Long id) {
         this.id = id;
     }

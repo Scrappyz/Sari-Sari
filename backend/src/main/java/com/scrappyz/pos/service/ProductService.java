@@ -32,8 +32,6 @@ public class ProductService {
     }
 
     public void remove(List<Long> ids) {
-        for(int i = 0; i < ids.size(); i++) {
-            productRepository.deleteById(ids.get(i));
-        }
+        productRepository.deleteAllById(ids);
     }
 }

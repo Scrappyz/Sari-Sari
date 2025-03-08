@@ -32,8 +32,6 @@ public class OrderService {
     }
 
     public void remove(List<Long> ids) {
-        for(int i = 0; i < ids.size(); i++) {
-            orderRepository.deleteById(ids.get(i));
-        }
+        orderRepository.deleteAllById(ids);
     }
 }

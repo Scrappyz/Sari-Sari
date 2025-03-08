@@ -50,12 +50,4 @@ public class ProductController {
         productService.remove(ids);
         return ResponseEntity.ok("Products Removed");
     }
-
-    // @PutMapping("path/{id}")
-    // public ResponseEntity<String> putMethodName(@PathVariable String id, @RequestBody String entity) {
-    //     //TODO: process PUT request
-        
-    //     return entity;
-    // }
-    
 }
