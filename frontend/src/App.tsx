@@ -1,13 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from './user/pages/Home/Home';
+import Products from './user/pages/Products/Products';
 
 function App() {
 
   return (
-    <>
-      <Button variant='primary outline-primary'>Button</Button>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/home' element={<Home />} />
+        <Route path='/products' element={<Products />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
