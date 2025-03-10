@@ -4,6 +4,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import './Products.css';
 
 function Products() {
+    
     return (
         <div>
             <Header />
@@ -20,7 +21,7 @@ function Products() {
                     </form>
                 </div>
                 <div className='d-flex justify-content-center mt-4'>
-                    <ProductCard />
+                    <ProductCard product={"Hotdog"} price={"PHP 5.00"}  desc={"SOme hotdog"}/>
                 </div>
             </div>
         </div>
