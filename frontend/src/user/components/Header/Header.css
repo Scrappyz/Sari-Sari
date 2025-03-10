@@ -1,4 +1,9 @@
-.header {
-    background-color: rgb(60, 164, 0);
+.navbar {
+    background-color: #1eba18;
+    height: 60px;
+}
+
+.navbar-brand {
+    margin-left: 10%;
 }
 

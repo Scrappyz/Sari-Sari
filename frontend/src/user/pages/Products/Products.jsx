@@ -7,7 +7,7 @@ function Products() {
         <div>
             <Header />
             <div>
-                <ProductCard imageSrc={"hotdog.jpg"} title={"Hotdog"} description={"Goodffffffffffffh Hotdog"} price={"$10"}/>
+                {/* <ProductCard imageSrc={"hotdog.jpg"} title={"Hotdog"} description={"Goodffffffffffffh Hotdog"} price={"$10"}/> */}
             </div>
         </div>
     );
