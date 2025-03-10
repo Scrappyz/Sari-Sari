@@ -1,7 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import '/src/global.css';
-import './ProductCard.css';
 
 function ProductCard({
 	product,
