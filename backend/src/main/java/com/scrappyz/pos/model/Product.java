@@ -27,6 +27,12 @@ public class Product {
     @Column(name = "stock")
     private int stock;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "media_src")
+    private String mediaSource;
+
     // Getters
     public Long getId() {
         return id;
@@ -42,6 +48,14 @@ public class Product {
 
     public int getStock() {
         return stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getMediaSource() {
+        return mediaSource;
     }
 
     // Setters
@@ -67,5 +81,13 @@ public class Product {
 
     public void decrementStock() {
         this.stock--;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setMediaSource(String mediaSource) {
+        this.mediaSource = mediaSource;
     }
 }

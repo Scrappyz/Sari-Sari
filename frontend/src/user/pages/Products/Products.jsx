@@ -33,12 +33,12 @@ function Products() {
                 </div>
                 <div className='container-fluid'>
                     <div className='d-flex mt-4' style={{width: "50%", height: "70vh"}}>
-                        <div className='row row-cols-3 justify-content-center' style={{overflowY: "auto"}}>
+                        <div className='row row-cols-3 justify-content-between' style={{overflowY: "auto"}}>
                             {
                                 products.map((product, i) => {
                                     return (
                                         <div className='col mb-4'>
-                                            <ProductCard product={product["productName"]} desc={"Temporary description"} price={"PHP " + product["price"]} />
+                                            <ProductCard product={product["productName"]} desc={product["description"]} price={"PHP " + product["price"]} mediaSrc={product["mediaSource"]} />
                                         </div>
                                     ) 
                                 })
