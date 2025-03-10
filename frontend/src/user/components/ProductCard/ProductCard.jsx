@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
+import '/src/global.css';
 import './ProductCard.css';
 
 function ProductCard() {
@@ -17,6 +18,9 @@ function ProductCard() {
 					<strong className='card-text'>Price:</strong>
 					<p className='card-text' style={{color: "green"}}>PHP 10</p>
 				</div>
+			</div>
+			<div className='card-footer'>
+
 			</div>
 		</div>
 	)
