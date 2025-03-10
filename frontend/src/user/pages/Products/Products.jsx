@@ -2,13 +2,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../../components/Header/Header';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './Products.css';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Products() {
+    const [products, setProducts] = useState([]);
 
-    axios.get("http://localhost:8080/products/9").then((res) => {
-        console.log(res.data);
-    });
+    useEffect(() => { // Get products on document load
+        axios.get("http://localhost:8080/products").then((res) => {
+            setProducts(res.data);
+        });
+    }, []);
+
+    console.log(products);
 
     return (
         <div>
@@ -25,8 +31,19 @@ function Products() {
                         </div>
                     </form>
                 </div>
-                <div className='d-flex justify-content-center mt-4'>
-                    <ProductCard product={"Hotdog"} price={"PHP 5.00"} mediaSrc={"hotdog.jpg"} desc={"SOme hotdog"}/>
+                <div className='d-flex mt-4' style={{width: "50%"}}>
+                    <div className='row row-cols-3 justify-content-center'>
+                        {
+                            products.map((product, i) => {
+
+                                return (
+                                    <div className='col mb-4'>
+                                        <ProductCard product={product["productName"]} desc={"Temporary description"} price={"PHP " + product["price"]} />
+                                    </div>
+                                ) 
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         </div>

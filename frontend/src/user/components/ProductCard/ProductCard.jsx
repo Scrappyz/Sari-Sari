@@ -10,7 +10,7 @@ function ProductCard({
 	mediaSrc = "no-pic.jpg"
 }) {
     return (
-		<div className='card rounded-3 shadow' style={{maxWidth: "16rem", maxHeight: "22rem"}}>
+		<div className='card rounded-3 shadow' style={{maxWidth: "16rem", maxHeight: "28rem"}}>
 			<div style={{height: "50%"}}>
 				<img src={mediaSrc} style={{objectFit: "fill", width: "100%", height: "100%"}} />
 			</div>
