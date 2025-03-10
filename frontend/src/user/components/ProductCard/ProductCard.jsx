@@ -7,6 +7,7 @@ function ProductCard({
 	product,
 	desc,
 	price,
+	stock,
 	mediaSrc = "no-pic.jpg"
 }) {
     return (
@@ -21,9 +22,13 @@ function ProductCard({
 				<div>
 					<p className='card-text'>{desc}</p>
 				</div>
-				<div className='d-flex justify-content-between mt-4 mb-0' style={{fontSize: "16px"}}>
+				<div className='d-flex justify-content-between mt-4' style={{fontSize: "16px"}}>
 					<strong className='card-text'>Price:</strong>
 					<p className='card-text' style={{color: "green"}}>{price}</p>
+				</div>
+				<div className='d-flex justify-content-between'>
+					<strong className='card-text'>In Stock:</strong>
+					<p className='card-text'>{stock}</p>
 				</div>
 			</div>
 			<div className='card-footer'>

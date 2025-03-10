@@ -38,7 +38,7 @@ function Products() {
                                 products.map((product, i) => {
                                     return (
                                         <div className='col mb-4'>
-                                            <ProductCard product={product["productName"]} desc={product["description"]} price={"PHP " + product["price"]} mediaSrc={product["mediaSource"]} />
+                                            <ProductCard product={product["productName"]} desc={product["description"]} price={"₱" + product["price"]} stock={product["stock"]} mediaSrc={product["mediaSource"]} />
                                         </div>
                                     ) 
                                 })
