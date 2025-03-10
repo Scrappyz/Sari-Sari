@@ -31,18 +31,19 @@ function Products() {
                         </div>
                     </form>
                 </div>
-                <div className='d-flex mt-4' style={{width: "50%"}}>
-                    <div className='row row-cols-3 justify-content-center'>
-                        {
-                            products.map((product, i) => {
-
-                                return (
-                                    <div className='col mb-4'>
-                                        <ProductCard product={product["productName"]} desc={"Temporary description"} price={"PHP " + product["price"]} />
-                                    </div>
-                                ) 
-                            })
-                        }
+                <div className='container-fluid'>
+                    <div className='d-flex mt-4' style={{width: "50%", height: "70vh"}}>
+                        <div className='row row-cols-3 justify-content-center' style={{overflowY: "auto"}}>
+                            {
+                                products.map((product, i) => {
+                                    return (
+                                        <div className='col mb-4'>
+                                            <ProductCard product={product["productName"]} desc={"Temporary description"} price={"PHP " + product["price"]} />
+                                        </div>
+                                    ) 
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

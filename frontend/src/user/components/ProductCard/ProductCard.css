@@ -17,7 +17,3 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
-
-.product-desc {
-    overflow-y: auto;
-}
