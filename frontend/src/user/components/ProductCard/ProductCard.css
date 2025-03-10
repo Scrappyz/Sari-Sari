@@ -21,3 +21,11 @@
 .product-desc {
     overflow-y: auto;
 }
+
+.card-body {
+    padding-bottom: 0;
+}
+
+.card-footer {
+    margin: 0;
+}

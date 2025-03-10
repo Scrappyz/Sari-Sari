@@ -21,7 +21,7 @@ function Products() {
                     </form>
                 </div>
                 <div className='d-flex justify-content-center mt-4'>
-                    <ProductCard product={"Hotdog"} price={"PHP 5.00"}  desc={"SOme hotdog"}/>
+                    <ProductCard product={"Hotdog"} price={"PHP 5.00"} mediaSrc={"hotdog.jpg"} desc={"SOme hotdog"}/>
                 </div>
             </div>
         </div>
