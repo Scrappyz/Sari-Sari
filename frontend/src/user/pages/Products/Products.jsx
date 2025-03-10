@@ -2,9 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../../components/Header/Header';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './Products.css';
+import axios from 'axios';
 
 function Products() {
-    
+
+    axios.get("http://localhost:8080/products/9").then((res) => {
+        console.log(res.data);
+    });
+
     return (
         <div>
             <Header />

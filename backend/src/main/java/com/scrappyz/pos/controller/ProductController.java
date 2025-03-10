@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scrappyz.pos.model.Product;
 import com.scrappyz.pos.service.ProductService;
 
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
