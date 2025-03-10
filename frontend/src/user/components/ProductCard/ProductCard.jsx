@@ -31,7 +31,11 @@ function ProductCard({
 				</div>
 			</div>
 			<div className='card-footer'>
-				<div className='d-flex justify-content-center'>
+				<div className='d-flex justify-content-between'>
+					<div className='d-flex justify-content-start' style={{width: "50%"}}>
+						<label className='form-label' style={{marginRight: "10px"}}><strong>Qty:</strong></label>
+						<input className='form-control form-control-sm' type='number' defaultValue={1} min={1} max={stock} />
+					</div>
 					<button className='btn btn-primary btn-sm'>Buy</button>
 				</div>
 			</div>

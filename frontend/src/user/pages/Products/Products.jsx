@@ -34,7 +34,7 @@ function Products() {
                 </div>
                 <div className='container-fluid'>
                     <div className='d-flex mt-4' style={{width: "50%", height: "70vh"}}>
-                        <div className='row row-cols-3 justify-content-between' style={{overflowY: "auto"}}>
+                        <div className='row row-cols-3 justify-content-start' style={{overflowY: "auto"}}>
                             {
                                 products.map((product, i) => {
                                     return (
