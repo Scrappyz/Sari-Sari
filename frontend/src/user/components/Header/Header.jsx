@@ -3,7 +3,7 @@ import './Header.css';
 
 function Header() {
     return (
-        <nav className='navbar sticky-top navbar-expand-lg'>
+        <nav className='navbar sticky-top navbar-expand-lg shadow'>
             <a class="navbar-brand" href="/home">Sari-Sari</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
