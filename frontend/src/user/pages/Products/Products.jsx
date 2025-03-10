@@ -1,13 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../../components/Header/Header';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import './Products.css';
 
 function Products() {
     return (
         <div>
             <Header />
-            <div>
-                {/* <ProductCard imageSrc={"hotdog.jpg"} title={"Hotdog"} description={"Goodffffffffffffh Hotdog"} price={"$10"}/> */}
+            <div className='body-container'>
+                <div className='d-flex justify-content-center'>
+                    <h2>Products</h2>
+                </div>
+                <div className='d-flex justify-content-center mt-3'>
+                    <form>
+                        <div className='input-group'>
+                            <input className='form-control' type='search' placeholder='Search product' />
+                            <button type='button' className='btn btn-primary'>Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div className='d-flex justify-content-center mt-4'>
+                    <ProductCard />
+                </div>
             </div>
         </div>
     );

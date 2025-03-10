@@ -2,28 +2,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import './ProductCard.css';
 
-function ProductCard({
-  width = '350px',
-  height = '300px',
-  imageSrc,
-  title,
-  description,
-  price,
-}) {
-  return (
-    <div>
-
-    </div>
-  );
+function ProductCard() {
+    return (
+		<div className='card rounded-3 shadow'>
+			<img src='hotdog.jpg' />
+			<div className='card-body'>
+				<h4 className='card-title'>Hotdog</h4>
+				<p className='card-text'>Good old hotdog</p>
+			</div>
+		</div>
+	)
 }
-
-ProductCard.propTypes = {
-  width: PropTypes.string,
-  height: PropTypes.string,
-  imageSrc: PropTypes.string,
-  title: PropTypes.string,
-  description: PropTypes.string,
-  price: PropTypes.string,
-};
 
 export default ProductCard;

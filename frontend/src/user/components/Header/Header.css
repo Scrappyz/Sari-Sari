@@ -1,9 +1,11 @@
 .navbar {
     background-color: #1eba18;
-    height: 60px;
+    height: 65px;
+    font-size: 18px;
 }
 
 .navbar-brand {
     margin-left: 10%;
+    font-weight: bolder;
 }
 
