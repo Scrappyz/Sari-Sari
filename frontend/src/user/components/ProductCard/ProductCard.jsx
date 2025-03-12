@@ -48,7 +48,7 @@ function ProductCard({
 							max={stock}
 						/>
 					</div>
-					<button className='btn btn-primary btn-sm' onClick={() => onBuy(productId, product, quantity)}>Buy</button>
+					<button className='btn btn-primary btn-sm' onClick={() => onBuy(productId, product, price, quantity)}>Buy</button>
 				</div>
 			</div>
 		</div>

@@ -26,3 +26,8 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #8a8a8a; 
 }
+
+.pallete-primary {
+    background-color: rgb(1, 180, 1);
+    color: #f1f1f1;
+}

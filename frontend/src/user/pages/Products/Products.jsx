@@ -18,9 +18,9 @@ function Products() {
 
     // console.log(products);
 
-    const addProduct = (productId, productName, quantity) => {
+    const addProduct = (productId, productName, price, quantity) => {
         // console.log(productId, productName, quantity);
-        setCheckout([...checkout, {"id": productId, "productName": productName, "quantity": quantity}]);
+        setCheckout([...checkout, {"id": productId, "productName": productName, "price": price, "quantity": quantity}]);
         // console.log("onClick", checkout);
     }
 
@@ -61,8 +61,26 @@ function Products() {
                             }
                         </div>
                     </div>
-                    <div className='d-flex mt-4' style={{width: "47%", height: "70vh"}}>
-                        paging
+                    <div className='d-flex mt-4 justify-content-center' style={{width: "49%"}}>
+                        <div className='card rounded shadow' style={{width: "50%"}}>
+                            <div className='card-header text-center pallete-primary'>
+                                <h1>Receipt</h1>
+                            </div>
+                            <div className='card-body'>
+                                <div className='d-flex' style={{height: "50%"}}>
+                                    {
+                                        checkout.map((product) => {
+                                            return (
+                                                <div className='d-flex justify-content-between' style={{width: "100%"}}>
+                                                    <p className='card-text'>{product["quantity"]}x {product["productName"]}</p>
+                                                    <p className='card-text'>{product["price"]}</p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
