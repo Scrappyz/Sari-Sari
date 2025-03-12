@@ -8,6 +8,7 @@ import axios from 'axios';
 
 function Products() {
     const [products, setProducts] = useState([]);
+    const [checkout, setCheckout] = useState([]);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
@@ -15,10 +16,12 @@ function Products() {
         });
     }, []);
 
-    console.log(products);
+    // console.log(products);
 
-    const addProduct = (productId, quantity) => {
-        console.log(productId, quantity);
+    const addProduct = (productId, productName, quantity) => {
+        // console.log(productId, productName, quantity);
+        setCheckout([...checkout, {"id": productId, "productName": productName, "quantity": quantity}]);
+        // console.log("onClick", checkout);
     }
 
     return (
@@ -36,8 +39,8 @@ function Products() {
                         </div>
                     </form>
                 </div>
-                <div className='container-fluid'>
-                    <div className='d-flex mt-4' style={{width: "50%", height: "70vh"}}>
+                <div className='container-fluid d-flex justify-content-between'>
+                    <div className='d-flex mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
                         <div className='row row-cols-3 justify-content-start' style={{overflowY: "auto"}}>
                             {
                                 products.map((product, i) => {
@@ -57,6 +60,9 @@ function Products() {
                                 })
                             }
                         </div>
+                    </div>
+                    <div className='d-flex mt-4' style={{width: "47%", height: "70vh"}}>
+                        paging
                     </div>
                 </div>
             </div>
