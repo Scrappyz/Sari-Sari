@@ -17,6 +17,10 @@ function Products() {
 
     console.log(products);
 
+    const addProduct = (productId, quantity) => {
+        console.log(productId, quantity);
+    }
+
     return (
         <div>
             <Header />
@@ -39,7 +43,15 @@ function Products() {
                                 products.map((product, i) => {
                                     return (
                                         <div className='col mb-4'>
-                                            <ProductCard product={product["productName"]} desc={product["description"]} price={"₱" + product["price"]} stock={product["stock"]} mediaSrc={product["mediaSource"]} />
+                                            <ProductCard 
+                                                productId={product["id"]}
+                                                product={product["productName"]} 
+                                                desc={product["description"]} 
+                                                price={"₱" + product["price"]} 
+                                                stock={product["stock"]} 
+                                                mediaSrc={product["mediaSource"]} 
+                                                onBuy={addProduct} 
+                                            />
                                         </div>
                                     ) 
                                 })

@@ -1,14 +1,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
 import '/src/global.css';
+import { useState } from 'react';
 
 function ProductCard({
+	productId,
 	product,
 	desc,
 	price,
 	stock,
-	mediaSrc = "no-pic.jpg"
+	mediaSrc = "no-pic.jpg",
+	onBuy
 }) {
+	const [quantity, setQuantity] = useState(1);
+
     return (
 		<div className='card rounded-3 shadow' style={{maxWidth: "16rem", maxHeight: "28rem"}}>
 			<div style={{height: "50%"}}>
@@ -34,9 +39,16 @@ function ProductCard({
 				<div className='d-flex justify-content-between'>
 					<div className='d-flex justify-content-start' style={{width: "50%"}}>
 						<label className='form-label' style={{marginRight: "10px"}}><strong>Qty:</strong></label>
-						<input className='form-control form-control-sm' type='number' defaultValue={1} min={1} max={stock} />
+						<input
+							className='form-control form-control-sm'
+							type='number'
+							value={quantity}
+							onChange={(e) => setQuantity(Number(e.target.value))}
+							min={1}
+							max={stock}
+						/>
 					</div>
-					<button className='btn btn-primary btn-sm'>Buy</button>
+					<button className='btn btn-primary btn-sm' onClick={() => onBuy(productId, quantity)}>Buy</button>
 				</div>
 			</div>
 		</div>
