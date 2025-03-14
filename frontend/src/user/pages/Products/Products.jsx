@@ -8,7 +8,8 @@ import axios from 'axios';
 
 function Products() {
     const [products, setProducts] = useState([]);
-    const [checkout, setCheckout] = useState([]);
+    const [checkout, setCheckout] = useState({});
+    console.log(checkout);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
@@ -19,9 +20,20 @@ function Products() {
     // console.log(products);
 
     const addProduct = (productId, productName, price, quantity) => {
-        // console.log(productId, productName, quantity);
-        setCheckout([...checkout, {"id": productId, "productName": productName, "price": price, "quantity": quantity}]);
-        // console.log("onClick", checkout);
+        let newProduct = {};
+
+        if(productId in checkout) {
+            newProduct = checkout[productId];
+            newProduct.quantity = newProduct.quantity + quantity;
+        } else {
+            newProduct = {
+                "productName": productName,
+                "price": price,
+                "quantity": quantity
+            };
+        }
+
+        setCheckout({...checkout, [productId]: newProduct});
     }
 
     return (
@@ -67,17 +79,25 @@ function Products() {
                                 <h1>Receipt</h1>
                             </div>
                             <div className='card-body'>
-                                <div className='d-flex' style={{height: "50%"}}>
-                                    {
-                                        checkout.map((product) => {
-                                            return (
-                                                <div className='d-flex justify-content-between' style={{width: "100%"}}>
-                                                    <p className='card-text'>{product["quantity"]}x {product["productName"]}</p>
-                                                    <p className='card-text'>{product["price"]}</p>
-                                                </div>
-                                            )
-                                        })
-                                    }
+                                <div className='row'>
+                                    <table className='table table-borderless' style={{width: "100%"}}>
+                                        <tr>
+                                            <th>Qty</th>
+                                            <th style={{width: "70%"}}>Product Name</th>
+                                            <th>Price</th>
+                                        </tr>
+                                        {
+                                            Object.keys(checkout).map((key) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{checkout[key]["quantity"]}x</td>
+                                                        <td>{checkout[key]["productName"]}</td>
+                                                        <td>{checkout[key]["price"]}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </table>
                                 </div>
                             </div>
                         </div>
