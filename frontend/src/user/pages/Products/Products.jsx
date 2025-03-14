@@ -8,7 +8,11 @@ import axios from 'axios';
 
 function Products() {
     const [products, setProducts] = useState([]);
-    const [checkout, setCheckout] = useState({});
+    const [checkout, setCheckout] = useState({
+        "products": {},
+        "total": 0
+    });
+    const currency = "₱";
     console.log(checkout);
 
     useEffect(() => { // Get products on document load
@@ -17,14 +21,12 @@ function Products() {
         });
     }, []);
 
-    // console.log(products);
-
     const addProduct = (productId, productName, price, quantity) => {
         let newProduct = {};
 
-        if(productId in checkout) {
-            newProduct = checkout[productId];
-            newProduct.quantity = newProduct.quantity + quantity;
+        if(productId in checkout["products"]) {
+            newProduct = checkout["products"][productId];
+            newProduct.quantity += quantity;
         } else {
             newProduct = {
                 "productName": productName,
@@ -33,7 +35,16 @@ function Products() {
             };
         }
 
-        setCheckout({...checkout, [productId]: newProduct});
+        let total = Math.round((checkout["total"] + (price * quantity)) * 100) / 100;
+
+        setCheckout({
+            ...checkout,
+            "products": {
+                ...checkout["products"],
+                [productId]: newProduct
+            },
+            "total": total
+        });
     }
 
     return (
@@ -51,6 +62,7 @@ function Products() {
                         </div>
                     </form>
                 </div>
+                <hr style={{marginBottom: 0}} />
                 <div className='container-fluid d-flex justify-content-between'>
                     <div className='d-flex mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
                         <div className='row row-cols-3 justify-content-start' style={{overflowY: "auto"}}>
@@ -62,7 +74,8 @@ function Products() {
                                                 productId={product["id"]}
                                                 product={product["productName"]} 
                                                 desc={product["description"]} 
-                                                price={"₱" + product["price"]} 
+                                                price={product["price"]}
+                                                currency={"₱"} 
                                                 stock={product["stock"]} 
                                                 mediaSrc={product["mediaSource"]} 
                                                 onBuy={addProduct} 
@@ -79,24 +92,29 @@ function Products() {
                                 <h1>Receipt</h1>
                             </div>
                             <div className='card-body'>
-                                <div className='row'>
+                                <div className='row' style={{marginLeft: "2%", marginRight: "2%"}}>
                                     <table className='table table-borderless' style={{width: "100%"}}>
-                                        <tr>
-                                            <th>Qty</th>
+                                        <thead>
+                                            <th style={{width: "20%"}}>Qty</th>
                                             <th style={{width: "70%"}}>Product Name</th>
                                             <th>Price</th>
-                                        </tr>
+                                        </thead>
                                         {
-                                            Object.keys(checkout).map((key) => {
+                                            Object.keys(checkout["products"]).map((key) => {
                                                 return (
                                                     <tr>
-                                                        <td>{checkout[key]["quantity"]}x</td>
-                                                        <td>{checkout[key]["productName"]}</td>
-                                                        <td>{checkout[key]["price"]}</td>
+                                                        <td>{checkout["products"][key]["quantity"]}x</td>
+                                                        <td>{checkout["products"][key]["productName"]}</td>
+                                                        <td>{currency}{checkout["products"][key]["price"]}</td>
                                                     </tr>
                                                 )
                                             })
                                         }
+                                        <tfoot>
+                                            <th>Total:</th>
+                                            <th></th>
+                                            <th>{currency}{checkout["total"]}</th>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

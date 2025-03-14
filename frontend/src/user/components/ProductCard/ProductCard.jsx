@@ -8,6 +8,7 @@ function ProductCard({
 	product,
 	desc,
 	price,
+	currency,
 	stock,
 	mediaSrc = "no-pic.jpg",
 	onBuy
@@ -28,7 +29,7 @@ function ProductCard({
 				</div>
 				<div className='d-flex justify-content-between mt-4' style={{fontSize: "16px"}}>
 					<strong className='card-text'>Price:</strong>
-					<p className='card-text' style={{color: "green"}}>{price}</p>
+					<p className='card-text' style={{color: "green"}}>{currency}{price}</p>
 				</div>
 				<div className='d-flex justify-content-between'>
 					<strong className='card-text'>In Stock:</strong>
