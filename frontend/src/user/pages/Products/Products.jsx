@@ -6,6 +6,7 @@ import './Products.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import bigDecimal from 'js-big-decimal';
+import Swal from 'sweetalert2';
 
 function Products() {
     const [products, setProducts] = useState({});
@@ -14,6 +15,7 @@ function Products() {
         "total": new bigDecimal(0)
     });
     const currency = "₱";
+    console.log(products);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
@@ -35,6 +37,14 @@ function Products() {
     }, []);
 
     const addProduct = (productId, productName, price, quantity) => {
+        if(products[productId]["stock"] < quantity) {
+            Swal.fire({
+                title: "Out of Stock",
+                icon: "error"
+            });
+            return;
+        }
+
         let newProduct = {};
 
         if(productId in checkout["products"]) {
@@ -57,6 +67,14 @@ function Products() {
                 [productId]: newProduct
             },
             "total": total
+        });
+
+        setProducts({
+            ...products,
+            [productId]: {
+                ...products[productId],
+                "stock": products[productId]["stock"] - quantity
+            }
         });
     }
 
