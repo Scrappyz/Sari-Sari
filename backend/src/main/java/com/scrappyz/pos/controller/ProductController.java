@@ -51,4 +51,5 @@ public class ProductController {
         productService.remove(ids);
         return ResponseEntity.ok("Products Removed");
     }
+    
 }

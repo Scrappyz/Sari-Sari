@@ -15,11 +15,11 @@ function Products() {
         "total": new bigDecimal(0)
     });
     const currency = "₱";
-    console.log(products);
+    console.log("Checkout:", checkout);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
-            let p = {};
+            const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
                 console.log(res.data[i]);
@@ -75,6 +75,22 @@ function Products() {
                 ...products[productId],
                 "stock": products[productId]["stock"] - quantity
             }
+        });
+    }
+
+    const checkoutProducts = () => {
+        const requestData = [];
+
+        for(const [key, value] of Object.entries(checkout["products"])) {
+            requestData.push({
+                productId: key,
+                quantity: value["quantity"],
+                unitPrice: value["price"]
+            });
+        }
+        // console.log("Request:", requestData);
+        axios.post("http://localhost:8080/orders/add", requestData).then((res) => {
+            console.log(res.data);
         });
     }
 
@@ -155,9 +171,9 @@ function Products() {
                                         </tfoot>
                                     </table>
                                 </div>
-                                {/* <div className='row justify-content-center'>
-                                    <button className='btn btn-primary' style={{width: "50%"}}>Checkout</button>
-                                </div> */}
+                                <div className='row justify-content-center mb-3'>
+                                    <button className='btn btn-primary' style={{width: "50%"}} onClick={() => checkoutProducts()}>Checkout</button>
+                                </div>
                             </div>
                         </div>
                     </div>
