@@ -100,7 +100,7 @@ function Products() {
                             {
                                 Object.keys(products).map((key) => {
                                     return (
-                                        <div className='col mb-4'>
+                                        <div className='col mb-4' key={key}>
                                             <ProductCard 
                                                 productId={key}
                                                 product={products[key]["productName"]} 
@@ -126,10 +126,13 @@ function Products() {
                                 <div className='row' style={{marginLeft: "2%", marginRight: "2%"}}>
                                     <table className='table table-borderless' style={{width: "100%"}}>
                                         <thead>
-                                            <th style={{width: "20%"}}>Qty</th>
-                                            <th style={{width: "70%"}}>Product Name</th>
-                                            <th>Price</th>
+                                            <tr>
+                                                <th style={{width: "20%"}}>Qty</th>
+                                                <th style={{width: "70%"}}>Product Name</th>
+                                                <th>Price</th>
+                                            </tr>
                                         </thead>
+                                        <tbody>
                                         {
                                             Object.keys(checkout["products"]).map((key) => {
                                                 let totalProductPrice = new bigDecimal(checkout["products"][key]["price"] * checkout["products"][key]["quantity"]);
@@ -142,10 +145,13 @@ function Products() {
                                                 )
                                             })
                                         }
+                                        </tbody>
                                         <tfoot>
-                                            <th>Total:</th>
-                                            <th></th>
-                                            <th>{currency}{checkout["total"].round(2).getPrettyValue()}</th>
+                                            <tr>
+                                                <td>Total:</td>
+                                                <td></td>
+                                                <td>{currency}{checkout["total"].round(2).getPrettyValue()}</td>
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>
