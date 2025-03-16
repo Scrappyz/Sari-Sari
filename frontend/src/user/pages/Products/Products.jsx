@@ -5,15 +5,15 @@ import '/src/global.css';
 import './Products.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import bigDecimal from 'js-big-decimal';
 
 function Products() {
     const [products, setProducts] = useState([]);
     const [checkout, setCheckout] = useState({
         "products": {},
-        "total": 0
+        "total": new bigDecimal(0)
     });
     const currency = "₱";
-    console.log(checkout);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
@@ -35,7 +35,7 @@ function Products() {
             };
         }
 
-        let total = Math.round((checkout["total"] + (price * quantity)) * 100) / 100;
+        let total = checkout["total"].add(new bigDecimal(price * quantity));
 
         setCheckout({
             ...checkout,
@@ -75,7 +75,7 @@ function Products() {
                                                 product={product["productName"]} 
                                                 desc={product["description"]} 
                                                 price={product["price"]}
-                                                currency={"₱"} 
+                                                currency={currency} 
                                                 stock={product["stock"]} 
                                                 mediaSrc={product["mediaSource"]} 
                                                 onBuy={addProduct} 
@@ -101,13 +101,12 @@ function Products() {
                                         </thead>
                                         {
                                             Object.keys(checkout["products"]).map((key) => {
-                                                let totalProductPrice = checkout["products"][key]["quantity"] * checkout["products"][key]["price"];
-                                                totalProductPrice = Math.round(totalProductPrice * 100) / 100;
+                                                let totalProductPrice = new bigDecimal(checkout["products"][key]["price"] * checkout["products"][key]["quantity"]);
                                                 return (
                                                     <tr>
                                                         <td>{checkout["products"][key]["quantity"]}x</td>
                                                         <td>{checkout["products"][key]["productName"]}</td>
-                                                        <td>{currency}{totalProductPrice}</td>
+                                                        <td>{currency}{totalProductPrice.round(2).getPrettyValue()}</td>
                                                     </tr>
                                                 )
                                             })
@@ -115,7 +114,7 @@ function Products() {
                                         <tfoot>
                                             <th>Total:</th>
                                             <th></th>
-                                            <th>{currency}{checkout["total"]}</th>
+                                            <th>{currency}{checkout["total"].round(2).getPrettyValue()}</th>
                                         </tfoot>
                                     </table>
                                 </div>
