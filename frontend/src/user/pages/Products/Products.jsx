@@ -101,11 +101,13 @@ function Products() {
                                         </thead>
                                         {
                                             Object.keys(checkout["products"]).map((key) => {
+                                                let totalProductPrice = checkout["products"][key]["quantity"] * checkout["products"][key]["price"];
+                                                totalProductPrice = Math.round(totalProductPrice * 100) / 100;
                                                 return (
                                                     <tr>
                                                         <td>{checkout["products"][key]["quantity"]}x</td>
                                                         <td>{checkout["products"][key]["productName"]}</td>
-                                                        <td>{currency}{checkout["products"][key]["price"]}</td>
+                                                        <td>{currency}{totalProductPrice}</td>
                                                     </tr>
                                                 )
                                             })
