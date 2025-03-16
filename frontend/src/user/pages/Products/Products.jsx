@@ -118,7 +118,7 @@ function Products() {
                         </div>
                     </div>
                     <div className='d-flex mt-4 justify-content-center' style={{width: "49%"}}>
-                        <div className='card rounded shadow' style={{width: "50%"}}>
+                        <div className='card rounded shadow' style={{width: "50%", height: "fit-content"}}>
                             <div className='card-header text-center pallete-primary'>
                                 <h1>Receipt</h1>
                             </div>
@@ -137,10 +137,10 @@ function Products() {
                                             Object.keys(checkout["products"]).map((key) => {
                                                 let totalProductPrice = new bigDecimal(checkout["products"][key]["price"] * checkout["products"][key]["quantity"]);
                                                 return (
-                                                    <tr>
-                                                        <td>{checkout["products"][key]["quantity"]}x</td>
-                                                        <td>{checkout["products"][key]["productName"]}</td>
-                                                        <td>{currency}{totalProductPrice.round(2).getPrettyValue()}</td>
+                                                    <tr key={key}>
+                                                        <td style={{paddingTop: "0px", paddingBottom: "0px"}}>{checkout["products"][key]["quantity"]}x</td>
+                                                        <td style={{paddingTop: "0px", paddingBottom: "0px"}}>{checkout["products"][key]["productName"]}</td>
+                                                        <td style={{paddingTop: "0px", paddingBottom: "0px"}}>{currency}{totalProductPrice.round(2).getPrettyValue()}</td>
                                                     </tr>
                                                 )
                                             })
@@ -148,16 +148,16 @@ function Products() {
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td>Total:</td>
+                                                <td><strong>Total:</strong></td>
                                                 <td></td>
-                                                <td>{currency}{checkout["total"].round(2).getPrettyValue()}</td>
+                                                <td><strong>{currency}{checkout["total"].round(2).getPrettyValue()}</strong></td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
-                                <div className='row justify-content-center'>
-                                    <button>Checkout</button>
-                                </div>
+                                {/* <div className='row justify-content-center'>
+                                    <button className='btn btn-primary' style={{width: "50%"}}>Checkout</button>
+                                </div> */}
                             </div>
                         </div>
                     </div>
