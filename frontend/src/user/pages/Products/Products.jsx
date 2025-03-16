@@ -8,7 +8,7 @@ import axios from 'axios';
 import bigDecimal from 'js-big-decimal';
 
 function Products() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState({});
     const [checkout, setCheckout] = useState({
         "products": {},
         "total": new bigDecimal(0)
@@ -17,7 +17,20 @@ function Products() {
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
-            setProducts(res.data);
+            let p = {};
+
+            for(let i = 0; i < res.data.length; i++) {
+                console.log(res.data[i]);
+                let id = res.data[i]["id"];
+                p[id] = {};
+                p[id]["productName"] = res.data[i]["productName"];
+                p[id]["price"] = res.data[i]["price"];
+                p[id]["stock"] = res.data[i]["stock"];
+                p[id]["description"] = res.data[i]["description"];
+                p[id]["mediaSource"] = res.data[i]["mediaSource"];
+            }
+
+            setProducts(p);
         });
     }, []);
 
@@ -67,17 +80,17 @@ function Products() {
                     <div className='d-flex mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
                         <div className='row row-cols-3 justify-content-start' style={{overflowY: "auto"}}>
                             {
-                                products.map((product, i) => {
+                                Object.keys(products).map((key) => {
                                     return (
                                         <div className='col mb-4'>
                                             <ProductCard 
-                                                productId={product["id"]}
-                                                product={product["productName"]} 
-                                                desc={product["description"]} 
-                                                price={product["price"]}
+                                                productId={key}
+                                                product={products[key]["productName"]} 
+                                                desc={products[key]["description"]} 
+                                                price={products[key]["price"]}
                                                 currency={currency} 
-                                                stock={product["stock"]} 
-                                                mediaSrc={product["mediaSource"]} 
+                                                stock={products[key]["stock"]} 
+                                                mediaSrc={products[key]["mediaSource"]} 
                                                 onBuy={addProduct} 
                                             />
                                         </div>
