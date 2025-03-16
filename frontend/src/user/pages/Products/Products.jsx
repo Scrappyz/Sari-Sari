@@ -149,6 +149,9 @@ function Products() {
                                         </tfoot>
                                     </table>
                                 </div>
+                                <div className='row justify-content-center'>
+                                    <button>Checkout</button>
+                                </div>
                             </div>
                         </div>
                     </div>
