@@ -87,7 +87,10 @@ function Products() {
                 quantity: value["quantity"]
             });
         }
-        console.log("Request:", requestData);
+        
+        if(requestData.length < 1) {
+            return;
+        }
 
         Swal.fire({
             title: "Proceed To Checkout?",

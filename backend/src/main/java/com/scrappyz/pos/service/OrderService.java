@@ -41,6 +41,10 @@ public class OrderService {
     }
 
     public void addOrder(List<CheckoutItem> checkoutItems) {
+        if(checkoutItems.isEmpty()) {
+            return;
+        }
+
         // Extract unique product IDs from checkout items
         Set<Long> productIds = checkoutItems.stream()
             .map(CheckoutItem::getProductId)
