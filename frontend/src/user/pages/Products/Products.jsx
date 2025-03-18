@@ -88,10 +88,45 @@ function Products() {
             });
         }
         console.log("Request:", requestData);
+
+        Swal.fire({
+            title: "Proceed To Checkout?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, checkout",
+            cancelButtonText: "No"
+        }).then((result) => {
+            if(!result.isConfirmed) {
+                return;
+            }
         
-        axios.post("http://localhost:8080/orders/add", requestData).then((res) => {
-            console.log(res.data);
-        });
+            Swal.fire({
+                title: "Processing your order...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        
+            axios.post("http://localhost:8080/orders/add", requestData).then((response) => {
+                // Close the loading alert, then show a success alert
+                Swal.fire({
+                    title: "Success!",
+                    text: "Your order has been placed successfully.",
+                    icon: "success",
+                    confirmButtonText: "OK"
+                });
+            }).catch((error) => {
+                // Close the loading alert, then show an error alert
+                Swal.fire({
+                    title: "Error",
+                    text: "There was an error processing your order.",
+                    icon: "error",
+                    confirmButtonText: "Try Again"
+                });
+            });
+        });  
+
     }
 
     return (
