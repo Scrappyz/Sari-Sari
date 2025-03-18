@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.scrappyz.pos.model.Product;
+import com.scrappyz.pos.model.entity.Product;
 import com.scrappyz.pos.repository.ProductRepository;
 
 @Service

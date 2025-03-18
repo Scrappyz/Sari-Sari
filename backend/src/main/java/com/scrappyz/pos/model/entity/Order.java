@@ -1,6 +1,7 @@
-package com.scrappyz.pos.model;
+package com.scrappyz.pos.model.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -61,7 +62,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount, int precision) {
         this.totalAmount = totalAmount;
+        this.totalAmount = this.totalAmount.setScale(precision, RoundingMode.HALF_EVEN);
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        setTotalAmount(totalAmount, 2);
     }
 }

@@ -1,4 +1,4 @@
-package com.scrappyz.pos.model;
+package com.scrappyz.pos.model.entity;
 
 import java.math.BigDecimal;
 

@@ -15,7 +15,7 @@ function Products() {
         "total": new bigDecimal(0)
     });
     const currency = "₱";
-    console.log("Checkout:", checkout);
+    // console.log("Checkout:", checkout);
 
     useEffect(() => { // Get products on document load
         axios.get("http://localhost:8080/products").then((res) => {
@@ -84,11 +84,11 @@ function Products() {
         for(const [key, value] of Object.entries(checkout["products"])) {
             requestData.push({
                 productId: key,
-                quantity: value["quantity"],
-                unitPrice: value["price"]
+                quantity: value["quantity"]
             });
         }
-        // console.log("Request:", requestData);
+        console.log("Request:", requestData);
+        
         axios.post("http://localhost:8080/orders/add", requestData).then((res) => {
             console.log(res.data);
         });

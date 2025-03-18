@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scrappyz.pos.model.Product;
+import com.scrappyz.pos.model.entity.Product;
 import com.scrappyz.pos.service.ProductService;
 
 
