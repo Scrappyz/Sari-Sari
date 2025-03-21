@@ -108,25 +108,26 @@ function Products() {
                 allowOutsideClick: false,
                 didOpen: () => {
                     Swal.showLoading();
+
+                    axios.post("http://localhost:8080/orders/add", requestData).then((response) => {
+                        Swal.close();
+
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Your order has been placed successfully.",
+                            icon: "success"
+                        });
+                    }).catch((error) => {
+                        Swal.close();
+
+                        Swal.fire({
+                            title: "Error",
+                            text: "There was an error processing your order.",
+                            icon: "error",
+                            confirmButtonText: "Try Again"
+                        });
+                    });
                 }
-            });
-        
-            axios.post("http://localhost:8080/orders/add", requestData).then((response) => {
-                // Close the loading alert, then show a success alert
-                Swal.fire({
-                    title: "Success!",
-                    text: "Your order has been placed successfully.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-            }).catch((error) => {
-                // Close the loading alert, then show an error alert
-                Swal.fire({
-                    title: "Error",
-                    text: "There was an error processing your order.",
-                    icon: "error",
-                    confirmButtonText: "Try Again"
-                });
             });
         });  
 
