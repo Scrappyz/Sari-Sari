@@ -89,8 +89,25 @@ public class OrderService {
         // Set the order id for each order item and batch save them
         orderItems.forEach(item -> item.setOrderId(orderId));
         orderItemRepository.saveAll(orderItems);
-    }
 
+        Map<Long, Integer> checkoutMap = new HashMap<>();
+        for(int i = 0; i < checkoutItems.size(); i++) {
+            checkoutMap.put(checkoutItems.get(i).getProductId(), checkoutItems.get(i).getQuantity());
+        }
+
+        for(int i = 0; i < products.size(); i++) {
+            Long productId = products.get(i).getId();
+            if(!checkoutMap.containsKey(productId)) {
+                continue;
+            }
+
+            int newStock = products.get(i).getStock() - checkoutMap.get(productId);
+            products.get(i).setStock(newStock);
+        }
+
+        // Decrease product stock
+        productRepository.saveAll(products);
+    }
 
     public void remove(Long id) {
         orderRepository.deleteById(id);
