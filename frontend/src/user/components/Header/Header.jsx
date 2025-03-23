@@ -4,7 +4,7 @@ import './Header.css';
 
 function Header() {
     return (
-        <nav className='navbar sticky-top navbar-expand-lg shadow'>
+        <nav className='navbar sticky-top navbar-expand-lg shadow' style={{marginBottom: "20px"}}>
             <a className="navbar-brand" href="/home">Sari-Sari</a>
             <div className="collapse navbar-collapse">
                 <ul className="navbar-nav">
@@ -19,7 +19,7 @@ function Header() {
                             Manage
                         </a>
                         <ul className='dropdown-menu' aria-labelledby="navbarDropdown">
-                            <li><a className='dropdown-item' href="#">Products</a></li>
+                            <li><a className='dropdown-item' href="/manage/products">Products</a></li>
                             <li><a className='dropdown-item' href="#">Orders</a></li>
                         </ul>
                     </li>

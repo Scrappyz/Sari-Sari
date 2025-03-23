@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './user/pages/Home/Home';
 import Products from './user/pages/Products/Products';
+import ManageProducts from './user/pages/ManageProducts/ManageProducts';
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path='/products' element={<Products />} />
+        <Route path='/manage/products' element={<ManageProducts />} />
       </Routes>
     </BrowserRouter>
   )
