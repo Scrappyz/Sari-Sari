@@ -117,6 +117,11 @@ function Products() {
                             text: "Your order has been placed successfully.",
                             icon: "success"
                         });
+
+                        setCheckout({
+                            "products": {},
+                            "total": new bigDecimal(0)
+                        });
                     }).catch((error) => {
                         Swal.close();
 
@@ -125,6 +130,11 @@ function Products() {
                             text: "There was an error processing your order.",
                             icon: "error",
                             confirmButtonText: "Try Again"
+                        });
+
+                        setCheckout({
+                            "products": {},
+                            "total": new bigDecimal(0)
                         });
                     });
                 }
