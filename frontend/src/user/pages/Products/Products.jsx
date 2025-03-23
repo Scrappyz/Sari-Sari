@@ -156,7 +156,7 @@ function Products() {
                                 Object.keys(products).map((key) => {
                                     return (
                                         <div className='col mb-4' key={key}>
-                                            <ProductCard 
+                                            <ProductCard
                                                 productId={key}
                                                 product={products[key]["productName"]} 
                                                 desc={products[key]["description"]} 
@@ -164,7 +164,7 @@ function Products() {
                                                 currency={currency} 
                                                 stock={products[key]["stock"]} 
                                                 mediaSrc={products[key]["mediaSource"]} 
-                                                onBuy={addProduct} 
+                                                handleBuy={addProduct} 
                                             />
                                         </div>
                                     ) 

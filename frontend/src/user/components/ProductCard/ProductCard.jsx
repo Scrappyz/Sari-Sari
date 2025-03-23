@@ -4,6 +4,7 @@ import '/src/global.css';
 import { useState } from 'react';
 
 function ProductCard({
+	type = "buy",
 	productId,
 	product,
 	desc,
@@ -11,7 +12,9 @@ function ProductCard({
 	currency,
 	stock,
 	mediaSrc = "no-pic.jpg",
-	onBuy
+	handleBuy,
+	handleEdit,
+	handleDelete
 }) {
 	const [quantity, setQuantity] = useState(1);
 
@@ -37,20 +40,29 @@ function ProductCard({
 				</div>
 			</div>
 			<div className='card-footer'>
-				<div className='d-flex justify-content-between'>
-					<div className='d-flex justify-content-start' style={{width: "50%"}}>
-						<label className='form-label' style={{marginRight: "10px"}}><strong>Qty:</strong></label>
-						<input
-							className='form-control form-control-sm'
-							type='number'
-							value={quantity}
-							onChange={(e) => setQuantity(Number(e.target.value))}
-							min={1}
-							max={stock}
-						/>
+			{
+				type === "buy" ? (
+					<div className='d-flex justify-content-between'>
+						<div className='d-flex justify-content-start' style={{width: "50%"}}>
+							<label className='form-label' style={{marginRight: "10px"}}><strong>Qty:</strong></label>
+							<input
+								className='form-control form-control-sm'
+								type='number'
+								value={quantity}
+								onChange={(e) => setQuantity(Number(e.target.value))}
+								min={1}
+								max={stock}
+							/>
+						</div>
+						<button className='btn btn-primary btn-sm' onClick={() => handleBuy(productId, product, price, quantity)}>Buy</button>
 					</div>
-					<button className='btn btn-primary btn-sm' onClick={() => onBuy(productId, product, price, quantity)}>Buy</button>
-				</div>
+				) : (
+					<div className='d-flex justify-content-center'>
+						<button className='btn btn-primary' style={{marginRight: "10px"}}>Edit</button>
+						<button className='btn btn-primary'>Delete</button>
+					</div>
+				)
+			}
 			</div>
 		</div>
 	)
