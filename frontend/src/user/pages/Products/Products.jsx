@@ -1,8 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from '../../components/Header/Header';
-import ProductCard from '../../components/ProductCard/ProductCard';
 import '/src/global.css';
 import './Products.css';
+
+import Header from '../../components/Header/Header';
+import ProductCard from '../../components/ProductCard/ProductCard';
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import bigDecimal from 'js-big-decimal';
@@ -117,6 +119,11 @@ function Products() {
                             text: "Your order has been placed successfully.",
                             icon: "success"
                         });
+
+                        setCheckout({
+                            "products": {},
+                            "total": new bigDecimal(0)
+                        });
                     }).catch((error) => {
                         Swal.close();
 
@@ -125,6 +132,11 @@ function Products() {
                             text: "There was an error processing your order.",
                             icon: "error",
                             confirmButtonText: "Try Again"
+                        });
+
+                        setCheckout({
+                            "products": {},
+                            "total": new bigDecimal(0)
                         });
                     });
                 }
@@ -156,7 +168,7 @@ function Products() {
                                 Object.keys(products).map((key) => {
                                     return (
                                         <div className='col mb-4' key={key}>
-                                            <ProductCard 
+                                            <ProductCard
                                                 productId={key}
                                                 product={products[key]["productName"]} 
                                                 desc={products[key]["description"]} 
@@ -164,7 +176,7 @@ function Products() {
                                                 currency={currency} 
                                                 stock={products[key]["stock"]} 
                                                 mediaSrc={products[key]["mediaSource"]} 
-                                                onBuy={addProduct} 
+                                                handleBuy={addProduct} 
                                             />
                                         </div>
                                     ) 
