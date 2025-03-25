@@ -25,7 +25,11 @@ function ManageProducts() {
     }, []);
 
     useEffect(() => { // Get products on document load
-        axios.get(ServerRoute + "/products").then((res) => {
+        axios.get(ServerRoute + "/products", {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("posjwt")
+            }
+        }).then((res) => {
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
