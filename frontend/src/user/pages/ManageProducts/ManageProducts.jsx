@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '/src/global.css';
 import './ManageProducts.css';
 
+import ServerRoute from '../../../ServerRoute';
 import Header from '../../components/Header/Header';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
@@ -9,13 +10,22 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import bigDecimal from 'js-big-decimal';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function ManageProducts() {
     const [products, setProducts] = useState({});
     const currency = "₱";
 
+    const navigate = useNavigate();
+
+    useEffect(function(){
+        if (localStorage.getItem("posjwt") === null) {
+            navigate("/login", { replace: true })
+        }
+    }, []);
+
     useEffect(() => { // Get products on document load
-        axios.get("http://localhost:8080/products").then((res) => {
+        axios.get(ServerRoute + "/products").then((res) => {
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {

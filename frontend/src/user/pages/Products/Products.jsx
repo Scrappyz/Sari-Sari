@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '/src/global.css';
 import './Products.css';
 
+import ServerRoute from '../../../ServerRoute';
 import Header from '../../components/Header/Header';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
@@ -9,6 +10,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import bigDecimal from 'js-big-decimal';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function Products() {
     const [products, setProducts] = useState({});
@@ -19,8 +21,21 @@ function Products() {
     const currency = "₱";
     // console.log("Checkout:", checkout);
 
+    const navigate = useNavigate();
+
+    useEffect(function(){
+        if (localStorage.getItem("posjwt") === null) {
+            navigate("/login", { replace: true })
+        }
+    }, []);
+
     useEffect(() => { // Get products on document load
-        axios.get("http://localhost:8080/products").then((res) => {
+        axios.get(ServerRoute + "/products", {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("posjwt")
+            },
+            credentials: "include"
+        }).then((res) => {
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
@@ -111,7 +126,11 @@ function Products() {
                 didOpen: () => {
                     Swal.showLoading();
 
-                    axios.post("http://localhost:8080/orders/add", requestData).then((response) => {
+                    axios.post(ServerRoute + "/orders/add", requestData, {
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("posjwt")
+                        }
+                    }).then((response) => {
                         Swal.close();
 
                         Swal.fire({

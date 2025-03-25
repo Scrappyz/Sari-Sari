@@ -23,6 +23,9 @@ function Header() {
                             <li><a className='dropdown-item' href="#">Orders</a></li>
                         </ul>
                     </li>
+                    <li className='nav-item'>
+                        <a className="nav-link" href="/logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </nav>
