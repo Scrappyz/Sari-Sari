@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.scrappyz.pos.model.entity.User;
 import com.scrappyz.pos.model.request.LoginRequest;
+import com.scrappyz.pos.model.request.RoleRequest;
 import com.scrappyz.pos.response.LoginResponse;
 import com.scrappyz.pos.security.JwtUtil;
 import com.scrappyz.pos.service.UserService;
@@ -79,5 +81,16 @@ public class UserController {
       loginResponse.setOther("");
     }
     return loginResponse;
+  }
+  
+  @PostMapping("/role")
+  public LoginResponse tryGetRole(@RequestBody RoleRequest r) {
+    String username = jwtUtil.extractUsername(r.getToken());
+    User u = userService.findByUsername(username);
+    LoginResponse l = new LoginResponse();
+    l.setStatus("success");
+    l.setMessage("Role successfully retrieved");
+    l.setOther(u.getRole());
+    return l;
   }
 }

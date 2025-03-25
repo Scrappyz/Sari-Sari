@@ -21,7 +21,25 @@ function ManageProducts() {
     useEffect(function(){
         if (localStorage.getItem("posjwt") === null) {
             navigate("/login", { replace: true })
+            return;
         }
+        axios.post(ServerRoute + "/role", {
+            token: localStorage.getItem("posjwt")
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("posjwt")
+            }
+        }).then(function(res) {
+            console.log(res.data);
+            if (res.data.other !== "ADMIN") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "This page is only for ADMINs"
+                });
+                navigate("/", { replace: true });
+            }
+        });
     }, []);
 
     useEffect(() => { // Get products on document load
