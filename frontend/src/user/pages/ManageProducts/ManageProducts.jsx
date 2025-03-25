@@ -39,6 +39,13 @@ function ManageProducts() {
                 });
                 navigate("/", { replace: true });
             }
+        }).catch(function(err) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Not Allowed"
+            });
+            navigate("/", { replace: true });
         });
     }, []);
 
