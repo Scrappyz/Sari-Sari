@@ -61,9 +61,10 @@ public class UserController {
   @PostMapping("/login")
   public LoginResponse tryLogin(@RequestBody LoginRequest l) {
     LoginResponse loginResponse = new LoginResponse();
+    User u = userService.findByUsername(l.getUsername());
     try {
       if (authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(l.getUsername(), l.getPassword())).isAuthenticated()) {
-        String token = jwtUtil.generateToken(l.getUsername());
+        String token = jwtUtil.generateToken(u);
         loginResponse.setStatus("success");
         loginResponse.setMessage("Token created");
         loginResponse.setOther(token);
