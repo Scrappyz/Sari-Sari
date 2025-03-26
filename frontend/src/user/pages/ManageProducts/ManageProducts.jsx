@@ -38,8 +38,6 @@ function ManageProducts() {
                     text: "This page is only for ADMINs"
                 });
                 navigate("/", { replace: true });
-            } else {
-                document.getElementById("ManageProducts").style.display = "";
             }
         }).catch(function(err) {
             Swal.fire({
@@ -79,11 +77,7 @@ function ManageProducts() {
     }
 
     return (
-        <div id="ManageProducts" style={
-            {
-                display: "none"
-            }
-        }>
+        <div>
             <Header />
             <div className='body-container'>
                 <div className='d-flex justify-content-center'>
