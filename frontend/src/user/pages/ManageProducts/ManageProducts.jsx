@@ -30,7 +30,7 @@ function ManageProducts() {
                 "Authorization": "Bearer " + localStorage.getItem("posjwt")
             }
         }).then(function(res) {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.other !== "ADMIN") {
                 Swal.fire({
                     icon: "error",
@@ -38,6 +38,8 @@ function ManageProducts() {
                     text: "This page is only for ADMINs"
                 });
                 navigate("/", { replace: true });
+            } else {
+                document.getElementById("ManageProducts").style.display = "";
             }
         }).catch(function(err) {
             Swal.fire({
@@ -77,7 +79,11 @@ function ManageProducts() {
     }
 
     return (
-        <div>
+        <div id="ManageProducts" style={
+            {
+                display: "none"
+            }
+        }>
             <Header />
             <div className='body-container'>
                 <div className='d-flex justify-content-center'>

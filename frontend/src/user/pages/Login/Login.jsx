@@ -10,6 +10,8 @@ function Login() {
   useEffect(function() {
     if (localStorage.getItem("posjwt") != null) {
       navigate("/", { replace: true })
+    } else {
+      document.getElementById("Login").style.display = "";
     }
   }, []);
 
@@ -47,8 +49,13 @@ function Login() {
       }
     });
   }
+
   return (
-    <div>
+    <div id="Login" style={
+      {  
+        display: "none"
+      }
+    }>
       <form onSubmit={tryLogin}>
         <input type="text" name="username" id="username" />
         <input type="password" name="password" id="password" />

@@ -7,10 +7,16 @@ function Home() {
     useEffect(function(){
         if (localStorage.getItem("posjwt") === null) {
             navigate("/login", { replace: true })
+        } else {
+            document.getElementById("Home").style.display = "";
         }
     }, []);
     return (
-        <div>
+        <div id='Home' style={
+            {
+                display: "none"
+            }
+        }>
             <Header />
         </div>
     );

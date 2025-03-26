@@ -26,6 +26,8 @@ function Products() {
     useEffect(function(){
         if (localStorage.getItem("posjwt") === null) {
             navigate("/login", { replace: true })
+        } else {
+            document.getElementById("Products").style.display = "";
         }
     }, []);
 
@@ -165,7 +167,11 @@ function Products() {
     }
 
     return (
-        <div>
+        <div id="Products" style={
+            {
+                display: "none"
+            }
+        }>
             <Header />
             <div className='body-container'>
                 <div className='d-flex justify-content-center'>
