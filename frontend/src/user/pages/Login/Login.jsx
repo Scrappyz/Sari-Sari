@@ -53,13 +53,18 @@ function Login() {
   return (
     <div id="Login" style={
       {  
-        display: "none"
+        display: "none",
       }
-    }>
+    } className="login-container">
+      <h2 className="text-center"> Login </h2>
       <form onSubmit={tryLogin}>
-        <input type="text" name="username" id="username" />
-        <input type="password" name="password" id="password" />
-        <input type="submit" value="Submit" />
+        <div className="mb-3">
+          <input type="text" name="username" id="username" placeholder="Enter your username" className="form-control"/>
+        </div>
+        <div className="mb-3">
+          <input type="password" name="password" id="password"  placeholder="Enter your password" className="form-control"/>
+        </div>
+        <input type="submit" value="Submit" className="btn btn-primary w-100"/>
       </form>
     </div>
   )
