@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Register() {
   const navigate = useNavigate();
 
   useEffect(function() {
     if (localStorage.getItem("posjwt") != null) {
       navigate("/", { replace: true }) 
     } else {
-      document.getElementById("Login").style.display = "";
+      document.getElementById("Register").style.display = "";
     }
   }, []);
 
@@ -21,8 +21,9 @@ function Login() {
     e.preventDefault();
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+    const confirmpassword = document.getElementById("confirmpassword").value;
 
-    if (username === "" || password === "") {
+    if (username === "" || password === "" || confirmpassword === "") {
       Swal.fire({
         icon: "error",
         title: "Error",
@@ -31,16 +32,30 @@ function Login() {
       return;
     }
 
-    axios.post(ServerRoute + "/login", {
+    if (password !== confirmpassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Password mismatch"
+      });
+      return;
+    }
+
+    axios.post(ServerRoute + "/register", {
       username,
       password
     }).then(function(r){
-      // console.log(r);
+      console.log(r);
       if (r.data.status === "success") {
-        const jwtToken = r.data.other;
+        // const jwtToken = r.data.other;
         // console.log(jwtToken);
-        localStorage.setItem("posjwt", jwtToken);
+        // localStorage.setItem("posjwt", jwtToken);
         // alert();
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Registered successfully"
+        });
         navigate("/", { replace: true });
       } else {
         Swal.fire({
@@ -53,7 +68,7 @@ function Login() {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{height: "100vh", display: "none"}} id="Login">
+    <div className="d-flex justify-content-center align-items-center" style={{height: "100vh", display: "none"}}  id="Register" >
       <div className="card shadow" style={{width: "300px"}}>
         <h3 className="card-title text-center mt-3">Login</h3>
         <div className="card-body">
@@ -64,9 +79,12 @@ function Login() {
             <div className="mb-3">
               <input type="password" name="password" id="password"  placeholder="Enter your password" className="form-control"/>
             </div>
+            <div className="mb-3">
+              <input type="password" name="confirmpassword" id="confirmpassword"  placeholder="Enter your password again" className="form-control"/>
+            </div>
             <input type="submit" value="Submit" className="btn btn-primary w-100"/>
             <div>
-              No account? <Link to="/register"> Sign up </Link>
+              Have account? <Link to="/login"> Sign in </Link>
             </div>
           </form>
         </div>
@@ -75,4 +93,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default Register;
