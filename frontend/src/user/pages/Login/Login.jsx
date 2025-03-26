@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
+
   useEffect(function() {
     if (localStorage.getItem("posjwt") != null) {
-      navigate("/", { replace: true })
-    } else {
-      document.getElementById("Login").style.display = "";
+      navigate("/", { replace: true }) 
     }
+    // } else {
+    //   document.getElementById("Login").style.display = "";
+    // }
   }, []);
 
   function tryLogin(e) {
@@ -51,21 +53,21 @@ function Login() {
   }
 
   return (
-    <div id="Login" style={
-      {  
-        display: "none",
-      }
-    } className="login-container">
-      <h2 className="text-center"> Login </h2>
-      <form onSubmit={tryLogin}>
-        <div className="mb-3">
-          <input type="text" name="username" id="username" placeholder="Enter your username" className="form-control"/>
+    <div className="d-flex justify-content-center align-items-center" style={{height: "100vh"}}>
+      <div className="card shadow" style={{width: "300px"}}>
+        <h3 className="card-title text-center mt-3">Login</h3>
+        <div className="card-body">
+          <form onSubmit={tryLogin}>
+            <div className="mb-3">
+              <input type="text" name="username" id="username" placeholder="Enter your username" className="form-control"/>
+            </div>
+            <div className="mb-3">
+              <input type="password" name="password" id="password"  placeholder="Enter your password" className="form-control"/>
+            </div>
+            <input type="submit" value="Submit" className="btn btn-primary w-100"/>
+          </form>
         </div>
-        <div className="mb-3">
-          <input type="password" name="password" id="password"  placeholder="Enter your password" className="form-control"/>
-        </div>
-        <input type="submit" value="Submit" className="btn btn-primary w-100"/>
-      </form>
+      </div>
     </div>
   )
 }
