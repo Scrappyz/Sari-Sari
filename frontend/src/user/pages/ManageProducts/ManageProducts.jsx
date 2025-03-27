@@ -85,6 +85,45 @@ function ManageProducts() {
             }
         }>
             <Header />
+            
+            <div className='modal fade' id="product-form" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div className='modal-dialog modal-dialog-centered' style={{width: "300px"}}>
+                    <div className='modal-content'>
+                        <div className='modal-body'>
+                            <h3 className='modal-title text-center mb-2'>Add New Product</h3>
+                            <div className='d-flex flex-column justify-content-center align-items-center'>
+                                <div className='mb-2' style={{width: "95%"}}>
+                                    <label className='form-label'>Product Name</label>
+                                    <input className='form-control' type='text' placeholder='Enter product name' />
+                                </div>
+                                <div className='mb-2' style={{width: "95%"}}>
+                                    <label className='form-label'>Description</label>
+                                    <textarea className='form-control' placeholder='Enter product description' />
+                                </div>
+                                <div className='row mb-2' style={{width: "95%"}}>
+                                    <div className='col-6'>
+                                        <label className='form-label'>Price</label>
+                                        <input className='form-control' type='number' min={0} />
+                                    </div>
+                                    <div className='col-6'>
+                                        <label className='form-label'>Stock</label>
+                                        <input className='form-control' type='number' min={0} />
+                                    </div>
+                                </div>
+                                <div className='mb-2' style={{width: "95%"}}>
+                                    <label className='form-label'>Media Source</label>
+                                    <input className='form-control' type='text' placeholder='Enter an image url' />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div className='body-container'>
                 <div className='d-flex justify-content-center'>
                     <h2>Manage Products</h2>
@@ -99,7 +138,7 @@ function ManageProducts() {
                 </div>
                 <hr style={{marginBottom: 0}} />
                 <div className='container-flex d-flex justify-content-center mt-3'>
-                    <button className='btn btn-primary' onClick={() => addProduct()}>Add</button>
+                    <button className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#product-form">Add</button>
                 </div>
                 <div className='container-flex d-flex justify-content-center'>
                     <div className='d-flex mt-4' style={{width: "90%"}}>
