@@ -57,6 +57,7 @@ function ManageProducts() {
                 "Authorization": "Bearer " + localStorage.getItem("posjwt")
             }
         }).then((res) => {
+            // Organize products
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
@@ -71,12 +72,29 @@ function ManageProducts() {
             }
 
             setProducts(p);
+
+            // Clear form on hide
+            const productForm = document.getElementById('product-form');
+            if(productForm) {
+                productForm.addEventListener('hidden.bs.modal', () => {
+                    const inputs = document.querySelectorAll("input, textarea");
+                    
+                    for(let i = 0; i < inputs.length; i++) {
+                        if(inputs[i].type === "number") {
+                            inputs[i].value = 1;
+                            continue;
+                        }
+
+                        inputs[i].value = "";
+                    }
+                });
+            }
         });
     }, []);
 
     const addProduct = () => {
-        
-    }
+
+    }    
 
     return (
         <div id='ManageProducts' style={
@@ -94,30 +112,30 @@ function ManageProducts() {
                             <div className='d-flex flex-column justify-content-center align-items-center'>
                                 <div className='mb-2' style={{width: "95%"}}>
                                     <label className='form-label'>Product Name</label>
-                                    <input className='form-control' type='text' placeholder='Enter product name' />
+                                    <input className='form-control' type='text' id='product-name' placeholder='Enter product name' />
                                 </div>
                                 <div className='mb-2' style={{width: "95%"}}>
                                     <label className='form-label'>Description</label>
-                                    <textarea className='form-control' placeholder='Enter product description' />
+                                    <textarea className='form-control' id='product-desc' placeholder='Enter product description' />
                                 </div>
                                 <div className='row mb-2' style={{width: "95%"}}>
                                     <div className='col-6'>
                                         <label className='form-label'>Price</label>
-                                        <input className='form-control' type='number' min={0} />
+                                        <input className='form-control' type='number' id='price' min={0} step={0.01} />
                                     </div>
                                     <div className='col-6'>
                                         <label className='form-label'>Stock</label>
-                                        <input className='form-control' type='number' min={0} />
+                                        <input className='form-control' type='number' id='stock' min={0} />
                                     </div>
                                 </div>
                                 <div className='mb-2' style={{width: "95%"}}>
                                     <label className='form-label'>Media Source</label>
-                                    <input className='form-control' type='text' placeholder='Enter an image url' />
+                                    <input className='form-control' type='text' id='media-source' placeholder='Enter an image url' />
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary" onClick={() => addProduct()}>Save changes</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -167,6 +185,10 @@ function ManageProducts() {
             </div>
         </div>
     );
+
+    document.getElementById('product-form').addEventListener('hidden.bs.modal', function () {
+        this.querySelectorAll('input, textarea').forEach(input => input.value = '');
+    });  
 }
 
 export default ManageProducts;
