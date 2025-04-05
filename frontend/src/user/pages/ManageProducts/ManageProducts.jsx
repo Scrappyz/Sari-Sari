@@ -80,11 +80,6 @@ function ManageProducts() {
                     const inputs = document.querySelectorAll("input, textarea");
                     
                     for(let i = 0; i < inputs.length; i++) {
-                        if(inputs[i].type === "number") {
-                            inputs[i].value = 1;
-                            continue;
-                        }
-
                         inputs[i].value = "";
                     }
                 });
@@ -121,11 +116,11 @@ function ManageProducts() {
                                 <div className='row mb-2' style={{width: "95%"}}>
                                     <div className='col-6'>
                                         <label className='form-label'>Price</label>
-                                        <input className='form-control' type='number' id='price' min={0} step={0.01} />
+                                        <input className='form-control' type='number' id='price' min={0} placeholder='0' step={0.01} />
                                     </div>
                                     <div className='col-6'>
                                         <label className='form-label'>Stock</label>
-                                        <input className='form-control' type='number' id='stock' min={0} />
+                                        <input className='form-control' type='number' id='stock' min={0} placeholder='0' />
                                     </div>
                                 </div>
                                 <div className='mb-2' style={{width: "95%"}}>
