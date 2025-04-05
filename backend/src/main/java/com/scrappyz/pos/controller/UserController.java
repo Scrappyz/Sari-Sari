@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scrappyz.pos.model.entity.User;
 import com.scrappyz.pos.model.request.LoginRequest;
 import com.scrappyz.pos.model.request.RoleRequest;
-import com.scrappyz.pos.response.LoginResponse;
+import com.scrappyz.pos.model.response.LoginResponse;
 import com.scrappyz.pos.security.JwtUtil;
 import com.scrappyz.pos.service.UserService;
 

@@ -65,8 +65,8 @@ function Login() {
               <input type="password" name="password" id="password"  placeholder="Enter your password" className="form-control"/>
             </div>
             <input type="submit" value="Submit" className="btn btn-primary w-100"/>
-            <div>
-              No account? <Link to="/register"> Sign up </Link>
+            <div className="d-flex justify-content-center mt-2">
+              <p>No account? <Link to="/register"> Sign up </Link></p>
             </div>
           </form>
         </div>
