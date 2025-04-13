@@ -30,9 +30,12 @@ function ProductCard({
 				<div>
 					<h5 className='card-title'>{product}</h5>
 				</div>
-				<div>
-					<p className='card-text'>{desc}</p>
-				</div>
+				{
+					(desc !== null && desc.length > 0) &&
+					<div>
+						<p className='card-text'>{desc}</p>
+					</div>
+				}
 				<div className='d-flex justify-content-between mt-4' style={{fontSize: "16px"}}>
 					<strong className='card-text'>Price:</strong>
 					<p className='card-text' style={{color: "green"}}>{currency}{price}</p>
