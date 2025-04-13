@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scrappyz.pos.model.entity.Product;
+import com.scrappyz.pos.model.response.Response;
 import com.scrappyz.pos.service.ProductService;
-
-
 
 @RestController
 @RequestMapping("/products")
@@ -37,26 +36,34 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Response<Product>> addProduct(@RequestBody Product product) {
         productService.add(product);
-        return ResponseEntity.ok("Product Added");
+
+        Response<Product> response = new Response<>("success", product, "Product Added", null);
+        return ResponseEntity.ok(response);
     }
     
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> removeProduct(@PathVariable Long id) {
+    public ResponseEntity<Response<Void>> removeProduct(@PathVariable Long id) {
         productService.remove(id);
-        return ResponseEntity.ok("Product Removed");
+
+        Response<Void> response = new Response<>("success", null, "Product Removed", null);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<String> removeProducts(@RequestBody List<Long> ids) {
+    public ResponseEntity<Response<Void>> removeProducts(@RequestBody List<Long> ids) {
         productService.remove(ids);
-        return ResponseEntity.ok("Products Removed");
+
+        Response<Void> response = new Response<>("success", null, "Product Removed", null);
+        return ResponseEntity.ok(response);
     }
     
     @PutMapping("edit/{id}")
-    public ResponseEntity<String> editProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Response<Void>> editProduct(@PathVariable Long id, @RequestBody Product product) {
         productService.edit(id, product);
-        return ResponseEntity.ok("Product Updated");
+
+        Response<Void> response = new Response<>("success", null, "Product Edited", null);
+        return ResponseEntity.ok(response);
     }
 }

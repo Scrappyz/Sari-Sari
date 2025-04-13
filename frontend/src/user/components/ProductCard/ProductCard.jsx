@@ -20,9 +20,12 @@ function ProductCard({
 
     return (
 		<div className='card rounded-3 shadow' style={{maxWidth: "16rem", maxHeight: "28rem"}}>
-			<div style={{height: "50%"}}>
-				<img src={mediaSrc} style={{objectFit: "fill", width: "100%", height: "100%"}} />
-			</div>
+			{
+				(mediaSrc !== null && mediaSrc.length > 0) &&
+				<div style={{height: "50%"}}>
+					<img src={mediaSrc} style={{objectFit: "fill", width: "100%", height: "100%"}} />
+				</div>
+			}
 			<div className='card-body'>
 				<div>
 					<h5 className='card-title'>{product}</h5>
