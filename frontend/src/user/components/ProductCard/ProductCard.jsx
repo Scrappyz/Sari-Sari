@@ -58,8 +58,8 @@ function ProductCard({
 					</div>
 				) : (
 					<div className='d-flex justify-content-center'>
-						<button className='btn btn-primary' style={{marginRight: "10px"}}>Edit</button>
-						<button className='btn btn-primary'>Delete</button>
+						<button className='btn btn-primary' onClick={() => handleEdit()} style={{marginRight: "10px"}}>Edit</button>
+						<button className='btn btn-primary' onClick={() => handleDelete(productId)} >Delete</button>
 					</div>
 				)
 			}

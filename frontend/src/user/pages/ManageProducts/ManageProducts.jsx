@@ -103,7 +103,7 @@ function ManageProducts() {
         // console.log(productDetails);
 
         Swal.fire({
-            title: "Processing your order...",
+            title: "Adding product...",
             allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading();
@@ -129,6 +129,52 @@ function ManageProducts() {
             }
         });
     }    
+
+    const deleteProduct = (productId) => {
+        Swal.fire({
+            icon: "info",
+            title: "Are you sure you want to delete this product?",
+            confirmButtonText: "Yes",
+            showDenyButton: true,
+            denyButtonText: "No"
+        }).then((result) => {
+            if(result.isDenied) {
+                return;
+            }
+
+            Swal.fire({
+                title: "Removing product...",
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+    
+                    axios.delete(ServerRoute + "/products/remove/" + productId, {
+                        headers: {
+                            "Authorization": `Bearer ${localStorage.getItem("posjwt")}`
+                        }
+                    }).then((res) => {
+                        // console.log(res);
+            
+                        Swal.fire({
+                            icon: "success",
+                            title: "Product Removed Successfully"
+                        });
+    
+                        setProducts(prev => {
+                            const {[productId]: _, ...rest} = prev;
+                            return rest;
+                        });
+                    }).catch((error) => {
+                        console.log(error);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error"
+                        });
+                    });
+                }
+            });
+        });
+    }
 
     return (
         <div id='ManageProducts' style={
@@ -207,7 +253,8 @@ function ManageProducts() {
                                             price={products[key]["price"]}
                                             currency={currency} 
                                             stock={products[key]["stock"]} 
-                                            mediaSrc={products[key]["mediaSource"]} 
+                                            mediaSrc={products[key]["mediaSource"]}
+                                            handleDelete={deleteProduct}
                                         />
                                     </div>
                                 ) 
