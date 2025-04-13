@@ -51,6 +51,14 @@ function ManageProducts() {
         });
     }, []);
 
+    const clearModalForm = () => {
+        const inputs = document.querySelectorAll("input, textarea");
+                
+        for(let i = 0; i < inputs.length; i++) {
+            inputs[i].value = "";
+        }
+    }
+
     useEffect(() => { // Get products on document load
         axios.get(ServerRoute + "/products", {
             headers: {
@@ -61,7 +69,7 @@ function ManageProducts() {
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
-                console.log(res.data[i]);
+                // console.log(res.data[i]);
                 let id = res.data[i]["id"];
                 p[id] = {};
                 p[id]["productName"] = res.data[i]["productName"];
@@ -72,23 +80,54 @@ function ManageProducts() {
             }
 
             setProducts(p);
-
-            // Clear form on hide
-            const productForm = document.getElementById('product-form');
-            if(productForm) {
-                productForm.addEventListener('hidden.bs.modal', () => {
-                    const inputs = document.querySelectorAll("input, textarea");
-                    
-                    for(let i = 0; i < inputs.length; i++) {
-                        inputs[i].value = "";
-                    }
-                });
-            }
         });
+
+        // Clear form on hide
+        const productForm = document.getElementById('product-form');
+        if(productForm) {
+            productForm.addEventListener('hidden.bs.modal', () => {
+                clearModalForm();
+            });
+        }
     }, []);
 
     const addProduct = () => {
+        const requestData = {
+            productName: document.getElementById("product-name").value,
+            description: document.getElementById("product-desc").value,
+            price: document.getElementById("price").value,
+            stock: document.getElementById("stock").value,
+            mediaSource: document.getElementById("media-source").value
+        };
 
+        // console.log(productDetails);
+
+        Swal.fire({
+            title: "Processing your order...",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+
+                axios.post(ServerRoute + "/products/add", requestData, {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("posjwt")}`
+                    }
+                }).then((res) => {
+                    // console.log(res);
+        
+                    Swal.fire({
+                        icon: "success",
+                        title: "Product Added Successfully"
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error"
+                    });
+                });
+            }
+        });
     }    
 
     return (
@@ -130,7 +169,7 @@ function ManageProducts() {
                             </div>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <button type="button" class="btn btn-primary" onClick={() => addProduct()}>Save changes</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={() => addProduct()}>Save changes</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
