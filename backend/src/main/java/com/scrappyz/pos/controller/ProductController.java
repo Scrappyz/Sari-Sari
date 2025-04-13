@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scrappyz.pos.model.entity.Product;
 import com.scrappyz.pos.service.ProductService;
+
 
 
 @RestController
@@ -52,4 +54,9 @@ public class ProductController {
         return ResponseEntity.ok("Products Removed");
     }
     
+    @PutMapping("edit/{id}")
+    public ResponseEntity<String> editProduct(@PathVariable Long id, @RequestBody Product product) {
+        productService.edit(id, product);
+        return ResponseEntity.ok("Product Updated");
+    }
 }

@@ -11,12 +11,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { Modal } from 'bootstrap';
 
 function ManageProducts() {
   const [products, setProducts] = useState({});
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [isEditMode, setIsEditMode] = useState(false); // Checks if a product is being edited or added
+  const [editingProductId, setEditingProductId] = useState(null); // Keeps track of what product is being edited in modal form
   const currency = "₱";
   const navigate = useNavigate();
 
@@ -85,7 +84,7 @@ function ManageProducts() {
       productForm.addEventListener('hidden.bs.modal', () => {
         clearModalForm();
         setIsEditMode(false);
-        setEditingProduct(null);
+        setEditingProductId(null);
       });
     }
   }, []);
@@ -113,6 +112,8 @@ function ManageProducts() {
             icon: "success",
             title: "Product Added Successfully"
           });
+
+          location.reload();
         }).catch((error) => {
           console.error(error);
           Swal.fire({
@@ -138,7 +139,8 @@ function ManageProducts() {
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
-        axios.put(ServerRoute + "/products/update/" + editingProduct, requestData, {
+
+        axios.put(ServerRoute + "/products/edit/" + editingProductId, requestData, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("posjwt")}`
           }
@@ -149,7 +151,7 @@ function ManageProducts() {
           });
           setProducts(prev => ({
             ...prev,
-            [editingProduct]: requestData
+            [editingProductId]: requestData
           }));
         }).catch((error) => {
           console.error(error);
@@ -201,22 +203,21 @@ function ManageProducts() {
     });
   };
 
-  // Open modal in edit mode: prefill form and show modal
-  const openEditModal = (productId) => {
-    const product = products[productId];
-    if (!product) return;
-    setIsEditMode(true);
-    setEditingProduct(productId);
+  const showProductForm = (type, id, name, desc, price, stock, mediaSource) => {
+    if(type === "edit") {
+        document.getElementById("product-name").value = name;
+        document.getElementById("product-desc").value = desc;
+        document.getElementById("price").value = price;
+        document.getElementById("stock").value = stock;
+        document.getElementById("media-source").value = mediaSource;
+        setIsEditMode(true);
+        setEditingProductId(id);
+    } else {
+        setIsEditMode(false);
+    }
 
-    document.getElementById("product-name").value = product.productName;
-    document.getElementById("product-desc").value = product.description;
-    document.getElementById("price").value = product.price;
-    document.getElementById("stock").value = product.stock;
-    document.getElementById("media-source").value = product.mediaSource;
-
-    const productFormModal = new Modal(document.getElementById('product-form'));
-    productFormModal.show();
-  };
+    document.getElementById("modal-toggle").click();
+  }
 
   return (
     <div id='ManageProducts' style={{ display: "none" }}>
@@ -264,11 +265,15 @@ function ManageProducts() {
               >
                 Save changes
               </button>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" data-bs-target="#product-form">Close</button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Hidden Modal Toggle Buttons */}
+      <button type='button' id="modal-toggle" style={{display: "none"}} data-bs-toggle="modal" data-bs-target="#product-form"></button>
+      <button type='button' id="modal-dismiss" style={{display: "none"}} data-bs-dismiss="modal" data-bs-target="#product-form"></button>
 
       {/* Main Content */}
       <div className='body-container'>
@@ -289,10 +294,6 @@ function ManageProducts() {
             className='btn btn-primary'
             data-bs-toggle="modal"
             data-bs-target="#product-form"
-            onClick={() => {
-              setIsEditMode(false);
-              setEditingProduct(null);
-            }}
           >
             Add
           </button>
@@ -312,7 +313,7 @@ function ManageProducts() {
                     stock={products[key]["stock"]}
                     mediaSrc={products[key]["mediaSource"]}
                     handleDelete={deleteProduct}
-                    handleEdit={openEditModal}
+                    handleEdit={showProductForm}
                   />
                 </div>
               ))}

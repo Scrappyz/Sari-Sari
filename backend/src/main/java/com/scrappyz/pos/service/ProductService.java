@@ -35,4 +35,10 @@ public class ProductService {
     public void remove(List<Long> ids) {
         productRepository.deleteAllById(ids);
     }
+
+    public void edit(Long id, Product product) {
+        // Utility.printJson(product);
+        product.setId(id);
+        productRepository.save(product);
+    }
 }
