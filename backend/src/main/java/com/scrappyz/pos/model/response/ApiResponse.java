@@ -2,13 +2,15 @@ package com.scrappyz.pos.model.response;
 
 import java.util.List;
 
-public class Response<T> {
+public class ApiResponse<T> {
     private String status;
     private T data;
     private String message;
     private List<String> errors;
 
-    public Response(String status, T data, String message, List<String> errors) {
+    public ApiResponse() {}
+
+    public ApiResponse(String status, T data, String message, List<String> errors) {
         this.status = status;
         this.data = data;
         this.message = message;

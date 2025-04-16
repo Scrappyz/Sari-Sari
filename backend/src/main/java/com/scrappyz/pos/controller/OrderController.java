@@ -3,6 +3,7 @@ package com.scrappyz.pos.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.scrappyz.pos.model.entity.Order;
 import com.scrappyz.pos.model.request.CheckoutItem;
+import com.scrappyz.pos.model.response.ApiResponse;
 import com.scrappyz.pos.service.OrderService;
 
 @RestController
@@ -35,10 +37,27 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addOrder(@RequestBody List<CheckoutItem> orderItems) {
+    public ResponseEntity<ApiResponse<Void>> addOrder(@RequestBody List<CheckoutItem> orderItems) {
         orderService.addOrder(orderItems);
 
-        return ResponseEntity.ok("Accepted");
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Added order", null);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<ApiResponse<Void>> removeOrder(@PathVariable Long id) {
+        orderService.remove(id);
+
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Removed order", null);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<ApiResponse<Void>> removeOrder(@RequestBody List<Long> ids) {
+        orderService.remove(ids);
+
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Removed order", null);
+        return ResponseEntity.ok(response);
     }
     
 }

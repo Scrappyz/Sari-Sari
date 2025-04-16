@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scrappyz.pos.model.entity.Product;
-import com.scrappyz.pos.model.response.Response;
+import com.scrappyz.pos.model.response.ApiResponse;
 import com.scrappyz.pos.service.ProductService;
 
 @RestController
@@ -36,34 +36,34 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Response<Product>> addProduct(@RequestBody Product product) {
+    public ResponseEntity<ApiResponse<Product>> addProduct(@RequestBody Product product) {
         productService.add(product);
 
-        Response<Product> response = new Response<>("success", product, "Product Added", null);
+        ApiResponse<Product> response = new ApiResponse<>("success", product, "Product Added", null);
         return ResponseEntity.ok(response);
     }
     
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<Response<Void>> removeProduct(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> removeProduct(@PathVariable Long id) {
         productService.remove(id);
 
-        Response<Void> response = new Response<>("success", null, "Product Removed", null);
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Removed", null);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/remove")
-    public ResponseEntity<Response<Void>> removeProducts(@RequestBody List<Long> ids) {
+    public ResponseEntity<ApiResponse<Void>> removeProducts(@RequestBody List<Long> ids) {
         productService.remove(ids);
 
-        Response<Void> response = new Response<>("success", null, "Product Removed", null);
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Removed", null);
         return ResponseEntity.ok(response);
     }
     
     @PutMapping("edit/{id}")
-    public ResponseEntity<Response<Void>> editProduct(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<ApiResponse<Void>> editProduct(@PathVariable Long id, @RequestBody Product product) {
         productService.edit(id, product);
 
-        Response<Void> response = new Response<>("success", null, "Product Edited", null);
+        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Edited", null);
         return ResponseEntity.ok(response);
     }
 }
