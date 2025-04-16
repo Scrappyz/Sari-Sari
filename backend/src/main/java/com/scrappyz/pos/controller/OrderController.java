@@ -16,6 +16,7 @@ import com.scrappyz.pos.model.request.CheckoutItem;
 import com.scrappyz.pos.model.response.ApiResponse;
 import com.scrappyz.pos.service.OrderService;
 
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -43,6 +44,13 @@ public class OrderController {
         ApiResponse<Void> response = new ApiResponse<>(true, null, "Added order", null);
         return ResponseEntity.ok(response);
     }
+
+    // @PutMapping("path/{id}")
+    // public String putMethodName(@PathVariable String id, @RequestBody String entity) {
+    //     //TODO: process PUT request
+        
+    //     return entity;
+    // }
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<ApiResponse<Void>> removeOrder(@PathVariable Long id) {
