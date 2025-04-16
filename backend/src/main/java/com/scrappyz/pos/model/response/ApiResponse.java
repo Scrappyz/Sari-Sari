@@ -3,23 +3,23 @@ package com.scrappyz.pos.model.response;
 import java.util.List;
 
 public class ApiResponse<T> {
-    private String status;
+    private boolean success;
     private T data;
     private String message;
     private List<String> errors;
 
     public ApiResponse() {}
 
-    public ApiResponse(String status, T data, String message, List<String> errors) {
-        this.status = status;
+    public ApiResponse(boolean success, T data, String message, List<String> errors) {
+        this.success = success;
         this.data = data;
         this.message = message;
         this.errors = errors;
     }
 
     // Getters
-    public String getStatus() {
-        return status;
+    public boolean getSuccess() {
+        return success;
     }
 
     public T getData() {
@@ -35,8 +35,8 @@ public class ApiResponse<T> {
     }
 
     // Setters
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public void setData(T data) {

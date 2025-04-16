@@ -40,7 +40,7 @@ public class OrderController {
     public ResponseEntity<ApiResponse<Void>> addOrder(@RequestBody List<CheckoutItem> orderItems) {
         orderService.addOrder(orderItems);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Added order", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Added order", null);
         return ResponseEntity.ok(response);
     }
 
@@ -48,7 +48,7 @@ public class OrderController {
     public ResponseEntity<ApiResponse<Void>> removeOrder(@PathVariable Long id) {
         orderService.remove(id);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Removed order", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Removed order", null);
         return ResponseEntity.ok(response);
     }
 
@@ -56,7 +56,7 @@ public class OrderController {
     public ResponseEntity<ApiResponse<Void>> removeOrder(@RequestBody List<Long> ids) {
         orderService.remove(ids);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Removed order", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Removed order", null);
         return ResponseEntity.ok(response);
     }
     

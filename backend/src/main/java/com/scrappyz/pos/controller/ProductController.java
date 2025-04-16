@@ -39,7 +39,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Product>> addProduct(@RequestBody Product product) {
         productService.add(product);
 
-        ApiResponse<Product> response = new ApiResponse<>("success", product, "Product Added", null);
+        ApiResponse<Product> response = new ApiResponse<>(true, product, "Product Added", null);
         return ResponseEntity.ok(response);
     }
     
@@ -47,7 +47,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Void>> removeProduct(@PathVariable Long id) {
         productService.remove(id);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Removed", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Product Removed", null);
         return ResponseEntity.ok(response);
     }
 
@@ -55,7 +55,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Void>> removeProducts(@RequestBody List<Long> ids) {
         productService.remove(ids);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Removed", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Product Removed", null);
         return ResponseEntity.ok(response);
     }
     
@@ -63,7 +63,7 @@ public class ProductController {
     public ResponseEntity<ApiResponse<Void>> editProduct(@PathVariable Long id, @RequestBody Product product) {
         productService.edit(id, product);
 
-        ApiResponse<Void> response = new ApiResponse<>("success", null, "Product Edited", null);
+        ApiResponse<Void> response = new ApiResponse<>(true, null, "Product Edited", null);
         return ResponseEntity.ok(response);
     }
 }
