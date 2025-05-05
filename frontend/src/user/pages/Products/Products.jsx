@@ -14,18 +14,21 @@ import { useNavigate } from 'react-router-dom';
 
 function Products() {
     const [products, setProducts] = useState([]);
-    console.log(products);
-    const [productMap, setProductMap] = useState({});
     const [checkout, setCheckout] = useState({
         "products": {},
         "total": new bigDecimal(0)
     });
     const currency = "₱";
     const [currentPage, setCurrentPage] = useState(1);
-    const displayLimit = 6;
+    const displayLimit = 9;
     const totalPages = Math.ceil(products.length / displayLimit);
 
     const navigate = useNavigate();
+
+    const productMap = {}; // For fast lookup via product id
+    for(let i = 0; i < products.length; i++) {
+        productMap[products[i].id] = i;
+    }
 
     useEffect(function(){
         if (localStorage.getItem("posjwt") === null) {
@@ -42,14 +45,7 @@ function Products() {
             },
             credentials: "include"
         }).then((res) => {
-            const p = {};
-
-            for(let i = 0; i < res.data.length; i++) {
-                p[res.data[i].id] = i;
-            }
-
             setProducts(res.data);
-            setProductMap(p);
         });
     }, []);
 
