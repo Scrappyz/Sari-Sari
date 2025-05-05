@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Products() {
     const [products, setProducts] = useState([]);
+    console.log(products);
     const [productMap, setProductMap] = useState({});
     const [checkout, setCheckout] = useState({
         "products": {},
@@ -55,7 +56,8 @@ function Products() {
     // console.log("productMap:", productMap);
 
     const addProduct = (productId, productName, price, quantity) => {
-        if(products[productId]["stock"] < quantity) {
+        let productIndex = productMap[productId];
+        if(products[productIndex]["stock"] < quantity) {
             Swal.fire({
                 title: "Out of Stock",
                 icon: "error"
@@ -87,13 +89,14 @@ function Products() {
             "total": total
         });
 
-        setProducts({
-            ...products,
-            [productId]: {
-                ...products[productId],
-                "stock": products[productId]["stock"] - quantity
-            }
-        });
+        setProducts(prev => {
+            const newArr = [...prev];
+            newArr[productIndex] = {
+                ...newArr[productIndex],
+                stock: newArr[productIndex].stock - quantity
+            };
+            return newArr;
+        });          
     }
 
     const checkoutProducts = () => {
@@ -165,8 +168,9 @@ function Products() {
 
     }
 
-    const startIndex = (currentPage - 1) * displayLimit;
-    const currentProducts = products.slice(startIndex, startIndex + displayLimit);
+    let startIndex = (currentPage - 1) * displayLimit;
+    let endIndex = startIndex + displayLimit;
+    const currentProducts = products.slice(startIndex, endIndex);
 
     return (
         <div id="Products" style={
@@ -192,17 +196,17 @@ function Products() {
                     <div className='d-flex flex-column mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
                         <div className='row row-cols-3 justify-content-start' style={{width: "100%", height: "90%", overflowY: "auto"}}>
                             {
-                                Object.keys(currentProducts).map((key) => {
+                                currentProducts.map((product) => {
                                     return (
-                                        <div className='col mb-4' key={key}>
+                                        <div className='col mb-4' key={product.id}>
                                             <ProductCard
-                                                productId={key}
-                                                product={products[key]["productName"]} 
-                                                desc={products[key]["description"]} 
-                                                price={products[key]["price"]}
+                                                productId={product.id}
+                                                product={product["productName"]} 
+                                                desc={product["description"]} 
+                                                price={product["price"]}
                                                 currency={currency} 
-                                                stock={products[key]["stock"]} 
-                                                mediaSrc={products[key]["mediaSource"]} 
+                                                stock={product["stock"]} 
+                                                mediaSrc={product["mediaSource"]} 
                                                 handleBuy={addProduct} 
                                             />
                                         </div>
@@ -211,8 +215,8 @@ function Products() {
                             }
                         </div>
                         <div className='d-flex justify-content-end' style={{paddingRight: "20px"}}>
-                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev - 1)}>Prev</button>
-                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
+                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev - 1)} disabled={currentPage === 1}>Prev</button>
+                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev + 1)} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div>
                     <div className='d-flex mt-4 justify-content-center' style={{width: "49%"}}>
