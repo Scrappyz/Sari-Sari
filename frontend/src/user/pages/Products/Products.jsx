@@ -216,6 +216,11 @@ function Products() {
                         </div>
                         <div className='d-flex justify-content-end' style={{paddingRight: "20px"}}>
                             <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev - 1)} disabled={currentPage === 1}>Prev</button>
+                            {
+                                Array.from({length: totalPages}, (_, i) => 
+                                    <button className='btn btn-light' onClick={() => setCurrentPage(i + 1)} disabled={currentPage === i + 1}>{i + 1}</button>
+                                )
+                            }
                             <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev + 1)} disabled={currentPage === totalPages}>Next</button>
                         </div>
                     </div>
