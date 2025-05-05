@@ -13,13 +13,16 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 function Products() {
-    const [products, setProducts] = useState({});
+    const [products, setProducts] = useState([]);
+    const [productMap, setProductMap] = useState({});
     const [checkout, setCheckout] = useState({
         "products": {},
         "total": new bigDecimal(0)
     });
     const currency = "₱";
-    // console.log("Checkout:", checkout);
+    const [currentPage, setCurrentPage] = useState(1);
+    const displayLimit = 6;
+    const totalPages = Math.ceil(products.length / displayLimit);
 
     const navigate = useNavigate();
 
@@ -41,19 +44,15 @@ function Products() {
             const p = {};
 
             for(let i = 0; i < res.data.length; i++) {
-                console.log(res.data[i]);
-                let id = res.data[i]["id"];
-                p[id] = {};
-                p[id]["productName"] = res.data[i]["productName"];
-                p[id]["price"] = res.data[i]["price"];
-                p[id]["stock"] = res.data[i]["stock"];
-                p[id]["description"] = res.data[i]["description"];
-                p[id]["mediaSource"] = res.data[i]["mediaSource"];
+                p[res.data[i].id] = i;
             }
 
-            setProducts(p);
+            setProducts(res.data);
+            setProductMap(p);
         });
     }, []);
+
+    // console.log("productMap:", productMap);
 
     const addProduct = (productId, productName, price, quantity) => {
         if(products[productId]["stock"] < quantity) {
@@ -166,6 +165,9 @@ function Products() {
 
     }
 
+    const startIndex = (currentPage - 1) * displayLimit;
+    const currentProducts = products.slice(startIndex, startIndex + displayLimit);
+
     return (
         <div id="Products" style={
             {
@@ -187,10 +189,10 @@ function Products() {
                 </div>
                 <hr style={{marginBottom: 0}} />
                 <div className='container-fluid d-flex justify-content-between'>
-                    <div className='d-flex mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
-                        <div className='row row-cols-3 justify-content-start' style={{overflowY: "auto"}}>
+                    <div className='d-flex flex-column mt-4 mr-3' style={{width: "50%", height: "70vh"}}>
+                        <div className='row row-cols-3 justify-content-start' style={{width: "100%", height: "90%", overflowY: "auto"}}>
                             {
-                                Object.keys(products).map((key) => {
+                                Object.keys(currentProducts).map((key) => {
                                     return (
                                         <div className='col mb-4' key={key}>
                                             <ProductCard
@@ -207,6 +209,10 @@ function Products() {
                                     ) 
                                 })
                             }
+                        </div>
+                        <div className='d-flex justify-content-end' style={{paddingRight: "20px"}}>
+                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev - 1)}>Prev</button>
+                            <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev + 1)}>Next</button>
                         </div>
                     </div>
                     <div className='d-flex mt-4 justify-content-center' style={{width: "49%"}}>
