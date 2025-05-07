@@ -16,6 +16,9 @@ function ManageProducts() {
     const [products, setProducts] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false); // Checks if a product is being edited or added
     const [editingProductId, setEditingProductId] = useState(null); // Keeps track of what product is being edited in modal form
+    const [currentPage, setCurrentPage] = useState(1);
+    const displayLimit = 5;
+    const totalPages = Math.ceil(products.length / displayLimit);
     const currency = "₱";
     const navigate = useNavigate();
 
@@ -111,11 +114,6 @@ function ManageProducts() {
                     });
 
                     const newProduct = res.data.data;
-
-                    // setProducts(prev => ({
-                    //     ...prev,
-                    //     [newKey]: newProduct
-                    // }));
 
                     setProducts([
                         ...products,
@@ -241,6 +239,10 @@ function ManageProducts() {
         document.getElementById("modal-toggle").click();
     }
 
+    let startIndex = (currentPage - 1) * displayLimit;
+    let endIndex = startIndex + displayLimit;
+    const currentProducts = products.slice(startIndex, endIndex);
+
     return (
         <div id='ManageProducts' style={{ display: "none" }}>
             <Header />
@@ -320,10 +322,21 @@ function ManageProducts() {
                         Add
                     </button>
                 </div>
+                <div className='container-flex d-flex justify-content-center mt-3'>
+                    <div className='btn-group justify-content-center'>
+                        <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev - 1)} disabled={currentPage === 1}>Prev</button>
+                        {
+                            Array.from({length: totalPages}, (_, i) => 
+                                <button className='btn btn-light' onClick={() => setCurrentPage(i + 1)} disabled={currentPage === i + 1}>{i + 1}</button>
+                            )
+                        }
+                        <button className='btn btn-light' onClick={() => setCurrentPage(prev => prev + 1)} disabled={currentPage === totalPages}>Next</button>
+                    </div>
+                </div>
                 <div className='container-flex d-flex justify-content-center'>
-                    <div className='d-flex mt-4' style={{ width: "90%" }}>
-                        <div className='row row-cols-5 justify-content-start'>
-                            {products.map((product) => (
+                    <div className='d-flex mt-2 justify-content-center' style={{ width: "80%" }}>
+                        <div className='row row-cols-5'>
+                            {currentProducts.map((product) => (
                                 <div className='col mb-4' key={product.id}>
                                     <ProductCard
                                         type="manage"
