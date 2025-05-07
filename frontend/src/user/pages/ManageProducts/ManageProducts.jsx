@@ -159,7 +159,7 @@ function ManageProducts() {
                     });
 
                     setProducts(prev => {
-                        const newProducts = products.map((val, i) => {
+                        return products.map((val, i) => {
                             if(editingProductId === val.id) {
                                 return {
                                     ...requestData,
@@ -168,7 +168,6 @@ function ManageProducts() {
                             }
                             return val;
                         });
-                        return newProducts;
                     });
 
                 }).catch((error) => {
