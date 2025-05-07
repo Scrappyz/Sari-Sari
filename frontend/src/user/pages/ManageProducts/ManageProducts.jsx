@@ -163,7 +163,7 @@ function ManageProducts() {
                             if(editingProductId === val.id) {
                                 return {
                                     ...requestData,
-                                    [id]: val.id
+                                    id: val.id
                                 };
                             }
                             return val;
