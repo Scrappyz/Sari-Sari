@@ -13,11 +13,18 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 function ManageProducts() {
-    const [products, setProducts] = useState({});
+    const [products, setProducts] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false); // Checks if a product is being edited or added
     const [editingProductId, setEditingProductId] = useState(null); // Keeps track of what product is being edited in modal form
     const currency = "₱";
     const navigate = useNavigate();
+
+    const productMap = {}; // For fast lookup via product id
+    for(let i = 0; i < products.length; i++) {
+        productMap[products[i].id] = i;
+    }
+
+    // console.log(products, productMap);
 
     // Admin validation
     useEffect(() => {
@@ -65,18 +72,7 @@ function ManageProducts() {
                 "Authorization": "Bearer " + localStorage.getItem("posjwt")
             }
         }).then((res) => {
-            const p = {};
-            res.data.forEach(product => {
-                let id = product["id"];
-                p[id] = {
-                    productName: product["productName"],
-                    price: product["price"],
-                    stock: product["stock"],
-                    description: product["description"],
-                    mediaSource: product["mediaSource"]
-                };
-            });
-            setProducts(p);
+            setProducts(res.data);
         });
 
         const productForm = document.getElementById('product-form');
@@ -114,14 +110,17 @@ function ManageProducts() {
                         title: "Product Added Successfully"
                     });
 
-                    const newKey = res.data.data.id;
                     const newProduct = res.data.data;
-                    delete newProduct.id;
 
-                    setProducts(prev => ({
-                        ...prev,
-                        [newKey]: newProduct
-                    }));
+                    // setProducts(prev => ({
+                    //     ...prev,
+                    //     [newKey]: newProduct
+                    // }));
+
+                    setProducts([
+                        ...products,
+                        newProduct
+                    ]);
 
                 }).catch((error) => {
                     console.error(error);
@@ -158,10 +157,20 @@ function ManageProducts() {
                         icon: "success",
                         title: "Product Updated Successfully"
                     });
-                    setProducts(prev => ({
-                        ...prev,
-                        [editingProductId]: requestData
-                    }));
+
+                    setProducts(prev => {
+                        const newProducts = products.map((val, i) => {
+                            if(editingProductId === val.id) {
+                                return {
+                                    ...requestData,
+                                    [id]: val.id
+                                };
+                            }
+                            return val;
+                        });
+                        return newProducts;
+                    });
+
                 }).catch((error) => {
                     console.error(error);
                     Swal.fire({
@@ -196,10 +205,15 @@ function ManageProducts() {
                             icon: "success",
                             title: "Product Removed Successfully"
                         });
-                        setProducts(prev => {
-                            const { [productId]: _, ...rest } = prev;
-                            return rest;
-                        });
+
+                        const newArr = products.filter(
+                            prev => prev.id !== productId
+                        );
+
+                        console.log("Delete:", newArr, "ID:", productId);
+
+                        setProducts(newArr);
+
                     }).catch((error) => {
                         console.error(error);
                         Swal.fire({
@@ -310,17 +324,17 @@ function ManageProducts() {
                 <div className='container-flex d-flex justify-content-center'>
                     <div className='d-flex mt-4' style={{ width: "90%" }}>
                         <div className='row row-cols-5 justify-content-start'>
-                            {Object.keys(products).map((key) => (
-                                <div className='col mb-4' key={key}>
+                            {products.map((product) => (
+                                <div className='col mb-4' key={product.id}>
                                     <ProductCard
                                         type="manage"
-                                        productId={key}
-                                        product={products[key]["productName"]}
-                                        desc={products[key]["description"]}
-                                        price={products[key]["price"]}
+                                        productId={product.id}
+                                        product={product["productName"]}
+                                        desc={product["description"]}
+                                        price={product["price"]}
                                         currency={currency}
-                                        stock={products[key]["stock"]}
-                                        mediaSrc={products[key]["mediaSource"]}
+                                        stock={product["stock"]}
+                                        mediaSrc={product["mediaSource"]}
                                         handleDelete={deleteProduct}
                                         handleEdit={showProductForm}
                                     />
